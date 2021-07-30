@@ -99,7 +99,7 @@ class EFox {
                 if (clearBefore) xmlFile.delete() //一般未false，增量更新
                 log("源文件已经存在， 做增量更新")
                 log("正在读取本地xml xmlFile = ${xmlFile.absolutePath}")
-                HashMap<String, String> map = readXmlToHashMap(xmlFile)
+                LinkedHashMap<String, String> map = readXmlToHashMap(xmlFile)
                 log("正在获取增量数据 ...")
                 map = incremental(map, jo) // 获取的增量数据
                 log("正在写入本地文件")
@@ -111,7 +111,7 @@ class EFox {
         })
     }
 
-    private HashMap<String, String> incremental(HashMap<String, String> hashMap, JSONObject jo) {
+    private LinkedHashMap<String, String> incremental(LinkedHashMap<String, String> hashMap, JSONObject jo) {
         // 1。 把JSONObject中的文件拿出来，
         //     有相同的，直接提示，手动删除
         //     增量更新的直接加入
@@ -139,7 +139,7 @@ class EFox {
     }
 
     // 把本地文件全部读出来
-    private HashMap<String, String> readXmlToHashMap(File xmlFile) {
+    private LinkedHashMap<String, String> readXmlToHashMap(File xmlFile) {
         assert xmlFile.exists() && xmlFile.size() > 0 //这里不能为空，按理说已经判断了
         println ">>>>>>>>>>>>>>>>>>>>"
         def xml = new XmlParser().parse(xmlFile) // 读出来
@@ -164,7 +164,7 @@ class EFox {
     }
 
     // 要做增量更新
-    private void writeHashMapToFile(File file, HashMap<String, String> map) {
+    private void writeHashMapToFile(File file, LinkedHashMap<String, String> map) {
         BufferedWriter bufferedWriter = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(file, false)))
         bufferedWriter.writeLine("<?xml version=\"1.0\" encoding=\"utf-8\"?>")
         bufferedWriter.writeLine("<resources>")
@@ -227,7 +227,7 @@ class EFox {
     }
 
     private Map readJSON() {
-        Map<String, JSONObject> listJsonObject = new HashMap<>()
+        Map<String, JSONObject> listJsonObject = new LinkedHashMap<>()
         valuesDir.forEach({ value, path ->
             // def url_path = "http://multi-lang.duowan.com/multiLangBig/Teachee/${projectPath}/${pathJson}?time=${System.currentTimeSeconds()}"
             def json = readStringFromUrl(getEfoxUrl(efoxPath, "${path}.json"))
