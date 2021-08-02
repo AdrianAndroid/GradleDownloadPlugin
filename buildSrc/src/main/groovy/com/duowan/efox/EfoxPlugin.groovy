@@ -27,5 +27,31 @@ class EfoxPlugin implements Plugin<Project> {
                 //downloadEfox(project)
             }
         }
+
+        // 清空values文件夹， 应该只是清空commonstring.xml 文件
+        project.task('efoxclean') {
+            setGroup("efox")
+            log('efoxclean')
+            doLast {
+                log('efoxclean')
+                File resFile = new File(project.getProjectDir(), extension.resPath)
+                if (resFile.exists()) {
+                    deleteCommonFiles(resFile, extension.resName)
+                }
+                log('efoxclean done!')
+            }
+        }
     }
+
+    static void deleteCommonFiles(File resDir, String comName) {
+        File[] files = resDir.listFiles()
+        files.each {f ->
+            if(f.isFile() && f.getName() == comName) {
+                f.delete()
+            } else if(f.isDirectory()) {
+                deleteCommonFiles(f, comName)
+            }
+        }
+    }
+
 }

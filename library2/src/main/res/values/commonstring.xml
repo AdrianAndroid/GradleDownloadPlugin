@@ -140,7 +140,7 @@
     <string name="transactions_cancelled_tips">This page contains all product selling transactions of cancelled status.</string>
     <string name="only_view_instrutor">Only view Instructor</string>
     <string name="learner_enquiry_contact_message">Message</string>
-    <string name="learner_enquiry_detail_input_placeholder">You can make a note here about the student's doubt.</string>
+    <string name="learner_enquiry_detail_input_placeholder">You can make a note here about the student\s doubt.</string>
     <string name="enter_zoom_meeting_pasword">Enter the Zoom meeting password</string>
     <string name="learner_enroll_content_title">Enroll in Content</string>
     <string name="delete_success_tip">delete success</string>
@@ -176,7 +176,6 @@
     <string name="app_limit_register_user_gr_max_user">While %s learners cannot log in, you are suggested to upgrade the plan to unlock more quotas, avoiding learners’ study is influenced.</string>
     <string name="add_learner_validity_unitdays">Days</string>
     <string name="duration_placeholder">Duration *</string>
-    <string name="copy_link_success">Link has been successfully copied to clipboard</string>
     <string name="load_failed_tip">Loading failed. Please try again.</string>
     <string name="add_learner_manual_failed">1 Learner Added failed.</string>
     <string name="learner_enroll_validity_period_enter_number">Enter a number</string>
