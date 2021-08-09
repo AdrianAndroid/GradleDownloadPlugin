@@ -537,6 +537,48 @@ static void readXmlMethod(String url) {
     //println xml
 }
 
+///////////////////////////////////////////////////////////////
+////////////////检查values文件//////////////////////////////////
+///////////////////////////////////////////////////////////////
+task checkValues() {
+    setGroup("study")
+    doLast {
+        println("开始 checkValues")
+        def fs = [
+                new File(getProjectDir(), "files/values")
+                , new File(getProjectDir(), "files/values-ko")
+        ]
+        String srcFileName = "values.xml" // 原文件名
+        String dstFileName = "values_dst.xml" // 目标文件名
+
+        // 读取所有的文件
+        Map<File, HashMap<String, String>> mapHashMap = new HashMap<>() //存放
+        for (def f in fs) {
+            println(f)
+            HashMap<String, String> hashMap = pickReadXmlToHashMap(new File(f, dstFileName))
+            mapHashMap.put(f, hashMap)
+        }
+
+        def f_k_0 = mapHashMap.keySet()[0]
+        HashMap<String, String> map = mapHashMap.get(f_k_0);
+        map.forEach({ key, value ->
+            boolean  isContain = true
+            mapHashMap.forEach({ k_file, v_map ->
+                // 只检查key, 和打印
+                if(!v_map.containsKey(key)) {
+                    isContain = false
+                }
+            })
+            if(isContain) {
+                print("- ")
+            } else {
+                println("********key=$key 并不想等")
+            }
+        })
+        println("结束 checkValues")
+    }
+}
+
 
 ///////////////////////////////////////////////////////////////
 ////////////////挑拣values文件//////////////////////////////////
@@ -555,7 +597,7 @@ task pickValues() {
 
         def fs = [
                 new File(getProjectDir(), "files/values")
-               , new File(getProjectDir(), "files/values-ko")
+                , new File(getProjectDir(), "files/values-ko")
         ]
         String srcFileName = "values.xml" // 原文件名
         String dstFileName = "values_dst.xml" // 目标文件名
@@ -591,11 +633,12 @@ task pickValues() {
                 // 所有的集合
                 // 写入文件
                 if (v instanceof String && pick_check_validate(k)) {
-                    mapWriters.get(f_0).writeLine(pickGeneratXmlStringitem(k, v));
+                    mapWriters.get(f_0).writeLine(pickGeneratXmlStringitem(k, pick_replaceValue(v)));
                     mapHashMap.forEach({ f_key, value ->
                         if (f_key != f_0) { // 不再比较参考点
-                            String v_other = ((HashMap<String, String>) value).get(k, "null");
-                            mapWriters.get(f_key).writeLine(pickGeneratXmlStringitem(k, v_other))
+                            String v_other = ((HashMap<String, String>) value).get(k)
+                            if (v_other == null) v_other = "AAAAAAA"
+                            mapWriters.get(f_key).writeLine(pickGeneratXmlStringitem(k, pick_replaceValue(v_other)))
                         }
                     })
                 } else {
@@ -664,6 +707,16 @@ static Boolean pick_check_validate(String str) {
     return true
 }
 
+static String pick_replaceValue(String value) {
+    if (value == null || value.size() == 0) return ""
+    def valueReplace = ["&": "&amp;", "%@": "%s", "\\'": "\\\\'", '\'': '\\']
+    valueReplace.forEach({ k, v ->
+        value = value.replace(k, v)//value.replaceAll(k, v)
+    })
+    return value
+}
+
+
 static String pickGeneratXmlStringitem(String key, String value) {
     if (key == null || key.isEmpty()) {
         throw IllegalArgumentException("key 不能为空！！！")
@@ -672,6 +725,7 @@ static String pickGeneratXmlStringitem(String key, String value) {
         throw new IllegalArgumentException("value 不能为空！！！")
     }
     def str = "        <string name=\"${key}\">${value}</string>"
+//    def str = "        <string name=\"${key}\"></string>"
     println("\n $str")
     return str
 }

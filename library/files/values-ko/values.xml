@@ -1783,10 +1783,8 @@
     <string name="zm_alert_switch_call_start_new_meeting_message_160917">새 회의를 시작하려면 이 회의에서 나가야 합니다.</string>
     <string name="zm_alert_switch_call_start_new_meeting_title_160917">새 회의를 시작하시겠어요?</string>
     <string name="zm_alert_switch_start_meeting">이 회의에서 나가서 다른 회의를 시작하시겠습니까?</string>
-    <string name="zm_alert_sync_msg_failed_msg_33341">콘텐츠를 로드할 수 없습니다. <u>다시 시도해 주십시오</u></string>
     <string name="zm_alert_unknown_error">알 수 없는 오류</string>
     <string name="zm_alert_unshare_file_failed">파일 삭제에 실패했습니다.</string>
-    <string name="zm_alert_unshare_group_msg_59554">이 파일은 채널 -&lt;%s>에서만 제거되며 개인 파일에서는 삭제되지 않습니다.</string>
     <string name="zm_alert_unshare_msg_59554">공유를 해제해도 파일이 삭제되지는 않으나, 현재 채널 구성원이 더 이상 파일에 액세스할 수 없습니다.</string>
     <string name="zm_alert_unsupported_format">지원되지 않는 문서 유형입니다. 이미지나 PDF 문서를 선택하십시오!</string>
     <string name="zm_alert_update_latest_version_156645">최신 Zoom 버전으로 업데이트하고 다시 시도하세요</string>
@@ -3813,7 +3811,6 @@
     <string name="zm_msg_delete_failed_19888">이 메시지를 삭제할 수 없습니다.</string>
     <string name="zm_msg_delete_file_confirm">%s을(를) 삭제하시겠습니까?</string>
     <string name="zm_msg_delete_file_confirm_89710">파일을 삭제하시겠습니까?</string>
-    <string name="zm_msg_delete_file_in_chats_warning_89710">이 파일을 &lt;%s>에서 삭제하시겠습니까? 이 공유된 파일은 이 채팅에서만 제거됩니다.</string>
     <string name="zm_msg_delete_file_warning_59554">이 파일 역시 파일이 공유된 모든 채널 및 채팅에서 제거됩니다.</string>
     <string name="zm_msg_delete_file_warning_89710">이 파일을 Zoom에서 완전히 삭제하시겠습니까? 이 작업은 실행 취소할 수 없습니다.</string>
     <string name="zm_msg_delete_other_meeting_120521">이 회의가 <![CDATA[<b>%s</b>]]>님에 대해 예약되었습니다. Zoom 웹의 최근에 삭제됨 페이지에서 7일 이내에 이 회의를 복구할 수 있습니다.</string>

@@ -3907,10 +3907,9 @@
     <string name="zm_alert_switch_call_start_new_meeting_message_160917">You will have to leave this meeting to start the new meeting.</string>
     <string name="zm_alert_switch_call_start_new_meeting_title_160917">Start new meeting?</string>
     <string name="zm_alert_switch_start_meeting">Do you want to leave this meeting and start another?</string>
-    <string name="zm_alert_sync_msg_failed_msg_33341">Unable to load content. <u>Try again</u></string>
     <string name="zm_alert_unknown_error">Unknown error</string>
     <string name="zm_alert_unshare_file_failed">Failed to delete file.</string>
-    <string name="zm_alert_unshare_group_msg_59554">This file will be removed only from the channel -&lt;%s> and it will not be deleted from your Personal Files</string>
+    <string name="zm_alert_unshare_group_msg_59554">This file will be removed only from the channel  and it will not be deleted from your Personal Files</string>
     <string name="zm_alert_unshare_msg_59554">Unshare will not delete your file, but current channel members will no longer have access to the file.</string>
     <string name="zm_alert_unsupported_format">Unsupported document type, please select an image or PDF document!</string>
     <string name="zm_alert_update_latest_version_156645">Please update to the latest version of Zoom and try again.</string>
@@ -5974,7 +5973,6 @@
     <string name="zm_msg_delete_failed_19888">Unable to delete this message.</string>
     <string name="zm_msg_delete_file_confirm">Do you want to delete %s?</string>
     <string name="zm_msg_delete_file_confirm_89710">Delete File?</string>
-    <string name="zm_msg_delete_file_in_chats_warning_89710">Are you sure you want to delete this file from &lt;%s>? This shared file will only be removed from this chat.</string>
     <string name="zm_msg_delete_file_warning_59554">This file will also be removed from all the channels and chats in which it was shared</string>
     <string name="zm_msg_delete_file_warning_89710">Are you sure you want to permanently delete this file from Zoom? This cannot be undone.</string>
     <string name="zm_msg_delete_other_meeting_120521">This meeting is scheduled for <![CDATA[<b>%s</b>]]>. You can recover this meeting within 7 days on Recently Deleted page from Zoom Web.</string>
