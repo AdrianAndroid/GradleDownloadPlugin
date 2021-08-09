@@ -1,4 +1,7 @@
+import com.android.aapt.Resources
 import org.json.JSONObject
+
+import java.lang.reflect.Array
 
 // https://blog.csdn.net/bencheng06/article/details/83628859
 
@@ -188,6 +191,7 @@ task combineFileContentNonIncremental {
         }
     }
 }
+
 
 //
 //rootProject.afterEvaluate { p->
@@ -402,7 +406,8 @@ void writeHashMapToFile(File file, HashMap<String, String> map) {
 
 void writeXmlToFile(File file, JSONObject jo) {
     //BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(httpURLConnection.getInputStream()))
-    BufferedWriter bufferedWriter = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(file, false))) //
+    BufferedWriter bufferedWriter = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(file, false)))
+    //
     // 重新写文件
     bufferedWriter.writeLine("<?xml version=\"1.0\" encoding=\"utf-8\"?>")
     bufferedWriter.writeLine("<resources>")
@@ -530,4 +535,161 @@ static void readXmlMethod(String url) {
     })
     println ">>>>>>>>>>>结束HashMap>>>>>>>>>>>>>>>>>"
     //println xml
+}
+
+
+///////////////////////////////////////////////////////////////
+////////////////挑拣values文件//////////////////////////////////
+///////////////////////////////////////////////////////////////
+task pickValues() {
+    setGroup("study")
+    doLast {
+        println(">>>>>>>start>>>>>>>>>")
+        println(">>>>>>>start>>>>>>>>>")
+        println(">>>>>>>start>>>>>>>>>")
+        println(">>>>>>>start>>>>>>>>>")
+        println(">>>>>>>start>>>>>>>>>")
+
+        File projectDir = getProjectDir()
+        println("${projectDir.absolutePath}")
+
+        def fs = [
+                new File(getProjectDir(), "files/values")
+               , new File(getProjectDir(), "files/values-ko")
+        ]
+        String srcFileName = "values.xml" // 原文件名
+        String dstFileName = "values_dst.xml" // 目标文件名
+
+        //File f_log = new File(getProjectDir(), "log.txt");
+        // 创建几个读写流
+
+        // 读取文件
+        Map<File, HashMap<String, String>> mapHashMap = new HashMap<>() //存放
+        for (def f in fs) {
+            println(f)
+            HashMap<String, String> hashMap = pickReadXmlToHashMap(new File(f, srcFileName))
+            mapHashMap.put(f, hashMap)
+        }
+
+//        BufferedWriter bufferedWriter = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(file, false)))
+        // 创建写入流
+        HashMap<File, BufferedWriter> mapWriters = new HashMap<>();//把读写流放到一个集合中
+        mapHashMap.forEach({ f, value ->
+            BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(new File(f, dstFileName), false)))
+            mapWriters.put(f, bw)
+            bw.writeLine("<?xml version=\"1.0\" encoding=\"utf-8\"?>")
+            bw.writeLine("<resources>")
+        })
+        // 写入头
+
+        // 根据第一个，拿到所有的值
+        if (mapHashMap.size() > 0) {
+            File f_0 = mapHashMap.keySet()[0]
+            // 遍历每一个key
+            HashMap<String, String> map_v0 = mapHashMap.get(f_0) //取出一个参考值
+            map_v0.forEach({ k, v ->
+                // 所有的集合
+                // 写入文件
+                if (v instanceof String && pick_check_validate(k)) {
+                    mapWriters.get(f_0).writeLine(pickGeneratXmlStringitem(k, v));
+                    mapHashMap.forEach({ f_key, value ->
+                        if (f_key != f_0) { // 不再比较参考点
+                            String v_other = ((HashMap<String, String>) value).get(k, "null");
+                            mapWriters.get(f_key).writeLine(pickGeneratXmlStringitem(k, v_other))
+                        }
+                    })
+                } else {
+                    println("这个是错误的  k:v => $k ------- $v")
+                }
+            })
+        }
+
+        // 关闭所有的流
+        mapWriters.forEach({ f, writer ->
+            writer.writeLine("</resources>")
+            writer.flush()
+            writer.close()
+        })
+
+
+        println(">>>>>>>end>>>>>>>>>")
+        println(">>>>>>>end>>>>>>>>>")
+        println(">>>>>>>end>>>>>>>>>")
+        println(">>>>>>>end>>>>>>>>>")
+        println(">>>>>>>end>>>>>>>>>")
+    }
+
+}
+
+
+// 把本地文件全部读出来
+static HashMap<String, String> pickReadXmlToHashMap(File xmlFile) {
+    assert xmlFile.exists() && xmlFile.size() > 0 //这里不能为空，按理说已经判断了
+    println ">>>>>>>>>>>>>>>>>>>>"
+    def xml = new XmlParser().parse(xmlFile) // 读出来
+    println xml.children().size()
+    println ">>>>>>>>>>>>>>>>>>>>>>>>>>>>"
+    def hashMap = new LinkedHashMap() // 现在可以为空
+    xml.children().forEach({
+        if (it instanceof Node && "string".equals(it.name())) {
+            def key = it.attributes()['name']
+            def valueList = ((List) it.value())
+            if (valueList.size() > 0) {
+                def value = valueList.get(0)
+                assert null == hashMap.put(key, value), "不能有重复的值，直接报错，请删除原先文件中的${key}"
+            } else {
+                println("$it 不符合要求!!")
+            }
+        }
+    })
+    println ">>>>>>>>>>>>>>>>>>>>>>>>>>>>"
+    println ">>>>>>>>>>>打印HashMap>>>>>>>>>>>>>>>>>"
+    hashMap.forEach({ key, value ->
+        println "$key =*******= $value"
+    })
+    println ">>>>>>>>>>>结束HashMap>>>>>>>>>>>>>>>>>"
+    //println xml
+    return hashMap
+}
+
+static Boolean pick_check_validate(String str) {
+    for (i in 0..<str.length()) {
+        int c = str.charAt(i)
+        if (i == 0 && !Character.isLowerCase(c)) { //只能为小写字母
+            return false
+        } else if (!(Character.isLowerCase(c) || Character.isDigit(c) || '_' == c)) {
+            return false
+        }
+    }
+    return true
+}
+
+static String pickGeneratXmlStringitem(String key, String value) {
+    if (key == null || key.isEmpty()) {
+        throw IllegalArgumentException("key 不能为空！！！")
+    }
+    if (value == null || value.isEmpty()) {
+        throw new IllegalArgumentException("value 不能为空！！！")
+    }
+    def str = "        <string name=\"${key}\">${value}</string>"
+    println("\n $str")
+    return str
+}
+
+
+// 要做增量更新
+static void pcikWriteHashMapToFile(File file, HashMap<String, String> map) {
+    BufferedWriter bufferedWriter = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(file, false)))
+    bufferedWriter.writeLine("<?xml version=\"1.0\" encoding=\"utf-8\"?>")
+    bufferedWriter.writeLine("<resources>")
+    map.entrySet().forEach({ entry ->
+        if (check_validate(entry.getKey())) {
+            bufferedWriter.writeLine(generatXmlStringitem(entry.getKey(), entry.getValue()))
+        } else { //不符合要求
+            print("\n 不符合要求 ：$entry ")
+        }
+    })
+    bufferedWriter.writeLine("</resources>")
+    bufferedWriter.flush()
+    bufferedWriter.close()
 }
