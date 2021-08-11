@@ -1,0 +1,16 @@
+import java.util.regex.Matcher
+import java.util.regex.Pattern
+
+class Utils {
+
+    // 替换空格
+    static String replaceBlank(String str) {
+        String dest = "";
+        if (str != null) {
+            Pattern p = Pattern.compile("\\s*|\\t|\\r|\\n")
+            Matcher m = p.matcher(str)
+            dest = m.replaceAll(str)
+        }
+        return dest;
+    }
+}

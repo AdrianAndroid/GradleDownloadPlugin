@@ -10,6 +10,7 @@ class EfoxExtension {
     String resName = "commonstring.xml" //通用的名称
     String resPath = "src/main/res"
     String efoxPath = "Teachee___2_3_0" //需要修改
+//     String efoxPaths = [] // 所有的内容 // 通过这个创建不同的工程
     Map<String, String> valuesDir = ["values": "en", "values-ko": "ko"] //需要外部传入
     Map<String, String> valueReplace = ["&": "&amp;", "%@": "%s", "\'":"\\\'"]
     boolean useLog = true
