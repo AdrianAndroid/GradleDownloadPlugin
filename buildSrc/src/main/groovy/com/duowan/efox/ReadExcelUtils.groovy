@@ -1,6 +1,8 @@
 // https://blog.csdn.net/lipr86/article/details/79316630
 
 // 读取Excel表格
+import org.apache.poi.ss.usermodel.Cell
+
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -10,7 +12,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
-import org.apache.poi.ss.usermodel.Cell;
+//import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.DateUtil;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
@@ -22,6 +24,7 @@ import org.slf4j.LoggerFactory;
 /**
  * 读取Excel
  *
+ * https://mvnrepository.com/artifact/org.apache.poi/poi 进行搜索最新的
  * @author zengwendong
  */
 public class ReadExcelUtils {
@@ -118,36 +121,37 @@ public class ReadExcelUtils {
      */
     private Object getCellFormatValue(Cell cell) {
         Object cellvalue = "";
-        if (cell != null) {
-            // 判断当前Cell的Type
-            switch (cell.getCellType()) {
-                case Cell.CELL_TYPE_NUMERIC:// 如果当前Cell的Type为NUMERIC
-                case Cell.CELL_TYPE_FORMULA: {
-                    // 判断当前的cell是否为Date
-                    if (DateUtil.isCellDateFormatted(cell)) {
-                        // 如果是Date类型则，转化为Data格式
-                        // data格式是带时分秒的：2013-7-10 0:00:00
-                        // cellvalue = cell.getDateCellValue().toLocaleString();
-                        // data格式是不带带时分秒的：2013-7-10
-                        Date date = cell.getDateCellValue();
-                        cellvalue = date;
-                    } else {// 如果是纯数字
-
-                        // 取得当前Cell的数值
-                        cellvalue = String.valueOf(cell.getNumericCellValue());
-                    }
-                    break;
-                }
-                case Cell.CELL_TYPE_STRING:// 如果当前Cell的Type为STRING
-                    // 取得当前的Cell字符串
-                    cellvalue = cell.getRichStringCellValue().getString();
-                    break;
-                default:// 默认的Cell值
-                    cellvalue = "";
-            }
-        } else {
-            cellvalue = "";
-        }
+        assert true, '包里没有这个，可能要换一个poi版本'
+//        if (cell != null) {
+//            // 判断当前Cell的Type
+//            switch (cell.getCellType()) {
+//                case Cell.CELL_TYPE_NUMERIC:// 如果当前Cell的Type为NUMERIC
+//                case Cell.CELL_TYPE_FORMULA: {
+//                    // 判断当前的cell是否为Date
+//                    if (DateUtil.isCellDateFormatted(cell)) {
+//                        // 如果是Date类型则，转化为Data格式
+//                        // data格式是带时分秒的：2013-7-10 0:00:00
+//                        // cellvalue = cell.getDateCellValue().toLocaleString();
+//                        // data格式是不带带时分秒的：2013-7-10
+//                        Date date = cell.getDateCellValue();
+//                        cellvalue = date;
+//                    } else {// 如果是纯数字
+//
+//                        // 取得当前Cell的数值
+//                        cellvalue = String.valueOf(cell.getNumericCellValue());
+//                    }
+//                    break;
+//                }
+//                case Cell.CELL_TYPE_STRING:// 如果当前Cell的Type为STRING
+//                    // 取得当前的Cell字符串
+//                    cellvalue = cell.getRichStringCellValue().getString();
+//                    break;
+//                default:// 默认的Cell值
+//                    cellvalue = "";
+//            }
+//        } else {
+//            cellvalue = "";
+//        }
         return cellvalue;
     }
 
