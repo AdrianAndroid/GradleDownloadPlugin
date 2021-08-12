@@ -21,4 +21,6 @@ class EfoxExtension {
             "/Users/flannery/Desktop/yy/TeacheeMaster-android/common/commonres/src/main/res/values/strings.xml"
             , "/Users/flannery/Desktop/yy/TeacheeMaster-android/common/commonres/src/main/res/values-ko/strings-ko.xml"]
     // 要操作的xml文件数组
+    ///Users/flannery/Desktop/yy/TeacheeMaster-android/app/build/intermediates/incremental/mergeOfficialInternalGpDebugResources/merged.dir/values/values.xml
+    ///Users/flannery/Desktop/yy/TeacheeMaster-android/app/build/intermediates/incremental/mergeOfficialInternalGpDebugResources/merged.dir/values/values.xml
 }

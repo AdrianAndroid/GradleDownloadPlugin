@@ -16,7 +16,7 @@ class EfoxPlugin implements Plugin<Project> {
 
         EfoxExtension extension = project.extensions.create('efox', EfoxExtension)
 
-        project.task('efoxtest100') {
+        project.task('efox_中文命名') {
             setGroup("efox")
             doLast {
                 println("==============")
