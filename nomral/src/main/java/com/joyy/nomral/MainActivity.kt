@@ -12,6 +12,7 @@ class MainActivity : AppCompatActivity() {
 
         findViewById<TextView>(R.id.tv).apply {
             append(getString(R.string.batch_live_uncoming))
+            append(getString(R.string.NNN_name))
         }
     }
 }

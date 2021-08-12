@@ -14,4 +14,7 @@ class EfoxExtension {
     Map<String, String> valuesDir = ["values": "en", "values-ko": "ko"] //需要外部传入
     Map<String, String> valueReplace = ["&": "&amp;", "%@": "%s", "\'":"\\\'"]
     boolean useLog = true
+
+
+    // 额外的
 }

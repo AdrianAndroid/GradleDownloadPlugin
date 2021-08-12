@@ -3,4 +3,5 @@
 <!--    <string name="batch_live_uncoming">Live &amp; Upcoming</string>-->
 <!--    <string name="batch_live_uncoming_">Live & Upcoming</string>-->
     <string name="batch_live_uncoming">Live %@ Upcoming</string>
+    <string name="NNN_name">NNN_name</string>
 </resources>
