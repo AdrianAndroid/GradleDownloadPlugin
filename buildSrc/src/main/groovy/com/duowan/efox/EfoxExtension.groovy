@@ -10,6 +10,7 @@ class EfoxExtension {
     String resName = "commonstring.xml" //通用的名称
     String resPath = "src/main/res"
     String efoxPath = "Teachee___2_3_0" //需要修改
+    List<String> efoxPaths = []//["Teachee___2_3_0"]
 //     String efoxPaths = [] // 所有的内容 // 通过这个创建不同的工程
     Map<String, String> valuesDir = ["values": "en", "values-ko": "ko"] //需要外部传入
     Map<String, String> valueReplace = ["&": "&amp;", "%@": "%s", "\'": "\\\'"]
@@ -22,5 +23,5 @@ class EfoxExtension {
             , "/Users/flannery/Desktop/yy/TeacheeMaster-android/common/commonres/src/main/res/values-ko/strings-ko.xml"]
     // 要操作的xml文件数组
     ///Users/flannery/Desktop/yy/TeacheeMaster-android/app/build/intermediates/incremental/mergeOfficialInternalGpDebugResources/merged.dir/values/values.xml
-    ///Users/flannery/Desktop/yy/TeacheeMaster-android/app/build/intermediates/incremental/mergeOfficialInternalGpDebugResources/merged.dir/values/values.xml
+    ////Users/flannery/Desktop/yy/TeacheeMaster-android/app/build/intermediates/incremental/mergeOfficialInternalGpDebugResources/merged.dir/values-ko/values-ko.xml
 }

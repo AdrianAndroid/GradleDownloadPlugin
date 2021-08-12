@@ -5,7 +5,10 @@ import org.json.JSONObject
 
 import java.text.SimpleDateFormat
 
-class EFox {
+/**
+ * 使用单个Path
+ */
+class EFox2 {
     private final String TAG = "[EFOX]"
     static final String url = "http://multi-lang.duowan.com/multiLangBig/Teachee/%s/%s" //默认的
 
@@ -38,20 +41,20 @@ class EFox {
     private boolean clearBefore
     private boolean useLog
 
-    EFox(EfoxExtension extension, Project project) {
+    EFox2(EfoxExtension extension, Project project, String efoxPath) {
         this.extension = extension
         this.project = project
 
-        resName = extension.resName //这个一般不改变，默认的就是 "commonstring.xml"
-        efoxPath = extension.efoxPath //"Teachee___2_3_0" //需要修改
-        efoxDefaultValues = extension.default_values //"values"
+        this.resName = extension.resName //这个一般不改变，默认的就是 "commonstring.xml"
+        this.efoxPath = efoxPath //"Teachee___2_3_0" //需要修改
+        this.efoxDefaultValues = extension.default_values //"values"
         // 所有要下载下来的目录， 应该外部传入
-        valuesDir = extension.valuesDir //["values": "en", "values-ko": "ko"]
-        urlFomat = extension.urlFomat //"http://multi-lang.duowan.com/multiLangBig/Teachee/%s/%s" // 地址模版
-        resPath = extension.resPath //src/main/res
-        valueReplace = extension.valueReplace //["&": "&amp;", "%@": "%s"]
-        clearBefore = extension.clearBefore
-        useLog = extension.useLog
+        this.valuesDir = extension.valuesDir //["values": "en", "values-ko": "ko"]
+        this.urlFomat = extension.urlFomat //"http://multi-lang.duowan.com/multiLangBig/Teachee/%s/%s" // 地址模版
+        this.resPath = extension.resPath //src/main/res
+        this.valueReplace = extension.valueReplace //["&": "&amp;", "%@": "%s"]
+        this.clearBefore = extension.clearBefore
+        this.useLog = extension.useLog
     }
 
     // 下载

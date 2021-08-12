@@ -1,6 +1,6 @@
 package com.duowan.efox
 
-import jdk.jshell.execution.Util
+
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 
@@ -14,61 +14,42 @@ class EfoxPlugin implements Plugin<Project> {
     void apply(Project project) {
         log("apply(Porject project)")
 
-        EfoxExtension extension = project.extensions.create('efox', EfoxExtension)
+        project.extensions.create('efox', EfoxExtension)
+        EfoxExtension extension = project.efox
+
+        project.afterEvaluate {
+            extension.efoxPaths.forEach({ pathName ->
+                println(pathName)
+                project.task('efox_' + pathName) {
+                    setGroup('efox')
+                    doLast {
+                        EFox2 efox2 = new EFox2(extension, project, pathName)
+                        efox2.downloadEFox()
+                    }
+                }
+            })
+        }
 
         project.task('efox_中文命名') {
             setGroup("efox")
             doLast {
                 println("==============")
                 println("==============")
-                println("====$i=========")
-                println("====$i=========")
-                println("====$i=========")
-                println("====$i=========")
-                println("====$i=========")
+                println("====中文=========")
+                println("====中文=========")
+                println("====中文=========")
+                println("====中文=========")
+                println("====中文=========")
                 println("==============")
                 println("==============")
             }
         }
-
-        for (i in 0..<10) {
-            project.task('efoxtest' + i) {
-                setGroup("efox")
-                doLast {
-                    println("==============")
-                    println("==============")
-                    println("====$i=========")
-                    println("====$i=========")
-                    println("====$i=========")
-                    println("====$i=========")
-                    println("====$i=========")
-                    println("==============")
-                    println("==============")
-                }
-            }
-        }
-
         // 文件排序，不做操作 <string>
         project.task('efoxSort') {
             setGroup("efox")
             doLast {
-//                String src = "/Users/flannery/Desktop/yy/Educator-android/common/commonres/src/main/res"
-//                String src_en = "/values/strings.xml"
-//                String src_ko = "/values-ko/strings-ko.xml"
-//
-//                String src_en_sort = "/values/strings_sort.xml"
-//                String src_ko_sort = "/values-ko/strings-ko_sort.xml"
-//
-//                List<String> _old = [src_en, src_ko]
-//                List<String> _new = [src_en_sort, src_ko_sort]
-//
-//                for (i in 0..<_old.size()) {
-//                    List<NodeData> list = Utils.readXmlTNodeData(new File(src, _old[i]))
-//                    list = Utils.sortNodeData(list)
-//                    Utils.writeNodeDataToFile(new File(src, _new[i]), list)
-//                }
-
-                extension.opSrcs.forEach({fileName ->
+//              String src = "/Users/flannery/Desktop/yy/Educator-android/common/commonres/src/main/res"
+                extension.opSrcs.forEach({ fileName ->
                     List<NodeData> list = Utils.readXmlTNodeData(new File(fileName))
                     Utils.sortNodeData(list)
                     Utils.writeNodeDataToFile(new File(Utils.newFileName(fileName, "sort")), list)
@@ -77,32 +58,20 @@ class EfoxPlugin implements Plugin<Project> {
         }
 
         // 将相同的key进行处理
-        project.task('efoxResultSame') {
+        project.task('efox_去重') {
             setGroup("efox")
             log('efoxResultSame')
             doLast {
                 // 先读取这个xml文件
 //                String src = "/Users/flannery/Desktop/yy/Educator-android/common/commonres/src/main/res"
-//                String src_en = "/values/strings.xml"
-//                String src_en_new = "/values/strings_new.xml"
-//
-//                String src_ko = "/values-ko/strings-ko.xml"
-//                String src_ko_new = "/values-ko/strings-ko_new.xml"
-//
-//                List<String> _old = [src_en, src_ko]
-//                List<String> _new = [src_en_new, src_ko_new]
-
-                extension.opSrcs.forEach({filename ->
+                extension.opSrcs.forEach({ filename ->
                     HashMap<String, String> map = Utils.readXmlToHashMap_hasSameKey(new File(filename))
                     Utils.writeHashMapToFileWithSort(new File(Utils.newFileName(filename, "new")), map)
                 })
-
-//                for (i in 0..<_old.size()) {
-//                    HashMap<String, String> map = Utils.readXmlToHashMap_hasSameKey(new File(src, _old[i]))
-//                    Utils.writeHashMapToFileWithSort(new File(src, _new[i]), map)
-//                }
             }
         }
+
+        //project.task('efox_' +)
 
         // 创建一个新的task
         project.task('efoxdownload') {
@@ -132,11 +101,13 @@ class EfoxPlugin implements Plugin<Project> {
         }
 
         // 创建一个任务：比较两个xml中的不一样的key打印出来
-        project.task('compare2xml') {
+        project.task('efox_比较两个XML内容') {
             setGroup("efox")
             doLast {
-                String src = extension.opSrcs[0] // "/Users/flannery/Desktop/yy/TeacheeMaster-android/common/commonres/src/main/res/values/strings.xml";
-                String des = extension.opSrcs[1] // "/Users/flannery/Desktop/yy/TeacheeMaster-android/common/commonres/src/main/res/values-ko/strings-ko.xml";
+                String src = extension.opSrcs[0]
+                // "/Users/flannery/Desktop/yy/TeacheeMaster-android/common/commonres/src/main/res/values/strings.xml";
+                String des = extension.opSrcs[1]
+                // "/Users/flannery/Desktop/yy/TeacheeMaster-android/common/commonres/src/main/res/values-ko/strings-ko.xml";
                 println(src)
                 println(des)
                 Utils.compare2Xml(src, des)
@@ -144,36 +115,59 @@ class EfoxPlugin implements Plugin<Project> {
         }
 
         // 将相同的key， 和不同的key分开
-        project.task('disguishXmlFile') {
+        project.task('efox_相同和不相同的key分开') {
             setGroup("efox")
             doLast {
-                String from = "/Users/flannery/Desktop/yy/TeacheeMaster-android/common/commonres/src/main/res"
-                String src_en = "/values/strings.xml";
-                String src_ko = "/values-ko/strings-ko.xml";
-                Map<String, String> from_en = Utils.readXmlToHashMap(new File(from, src_en))
-                Map<String, String> from_ko = Utils.readXmlToHashMap(new File(from, src_ko));
+//                String from = "/Users/flannery/Desktop/yy/TeacheeMaster-android/common/commonres/src/main/res"
+//                String src_en = "/values/strings.xml"
+//                String src_ko = "/values-ko/strings-ko.xml"
 
-                String to = "/Users/flannery/Desktop/yy/GradleDownloadPlugin/library2/src/main/res";
-                String des_en = "/values/strings_same.xml"
-                String des_en_diff = "/values/strings_diff.xml"
-                String des_ko = "/values-ko/strings_same.xml"
-                String des_ko_diff = "/values-ko/strings_diff.xml"
+                String src_en = extension.opSrcs[0]
+                String src_ko = extension.opSrcs[1]
+                // 读取原始的xml文件
+                Map<String, String> from_en = Utils.readXmlToHashMap(new File(src_en))
+                Map<String, String> from_ko = Utils.readXmlToHashMap(new File(src_ko));
+
+//                String to = "/Users/flannery/Desktop/yy/GradleDownloadPlugin/library2/src/main/res";
+//                String des_en = "/values/strings_same.xml"
+//                String des_en_diff = "/values/strings_diff.xml"
+//                String des_ko = "/values-ko/strings_same.xml"
+//                String des_ko_diff = "/values-ko/strings_diff.xml"
                 HashMap<String, String> to_map = Utils.differenceSRC(from_en, from_ko)
                 HashMap<String, String> en_same = to_map.get(Utils.KEY_SAME_SRC)
                 HashMap<String, String> en_diff = to_map.get(Utils.KEY_DIFF_SRC)
                 // 写入文件
                 // 排序
-                Utils.writeHashMapToFileWithSort(new File(to, des_en), en_same)
-                Utils.writeHashMapToFileWithSort(new File(to, des_en_diff), en_diff)
+                Utils.writeHashMapToFileWithSort(new File(src_en, "same"), en_same)
+                Utils.writeHashMapToFileWithSort(new File(src_ko, "diff"), en_diff)
 
                 HashMap<String, String> to_map2 = Utils.differenceSRC(from_ko, from_en)
                 HashMap<String, String> ko_same = to_map2.get(Utils.KEY_SAME_SRC)
                 HashMap<String, String> ko_diff = to_map2.get(Utils.KEY_DIFF_SRC)
                 //写入文件
-                Utils.writeHashMapToFileWithSort(new File(to, des_ko), ko_same)
-                Utils.writeHashMapToFileWithSort(new File(to, des_ko_diff), ko_diff)
+                Utils.writeHashMapToFileWithSort(new File(Utils.newFileName(src_ko, "same")), ko_same)
+                Utils.writeHashMapToFileWithSort(new File(Utils.newFileName(src_ko, "diff")), ko_diff)
             }
         }
 
+        project.task('efox_测试') {
+            setGroup("efox")
+            doLast {
+                println("===================")
+                println(project.efox.efoxPaths)
+                println(project.efox.efoxPaths)
+                println(project.efox.efoxPaths)
+                println(project.efox.efoxPaths)
+                println(project.efox.efoxPaths)
+                println(project.efox.efoxPaths)
+                println(project.efox.efoxPaths)
+                println(project.efox.efoxPaths)
+                println(project.efox.efoxPaths)
+                println(project.efox.efoxPaths)
+                println(project.efox.efoxPaths)
+                println(project.efox.efoxPaths)
+                println(project.efox.efoxPaths)
+            }
+        }
     }
 }
