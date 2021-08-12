@@ -52,21 +52,27 @@ class EfoxPlugin implements Plugin<Project> {
         project.task('efoxSort') {
             setGroup("efox")
             doLast {
-                String src = "/Users/flannery/Desktop/yy/Educator-android/common/commonres/src/main/res"
-                String src_en = "/values/strings.xml"
-                String src_ko = "/values-ko/strings-ko.xml"
+//                String src = "/Users/flannery/Desktop/yy/Educator-android/common/commonres/src/main/res"
+//                String src_en = "/values/strings.xml"
+//                String src_ko = "/values-ko/strings-ko.xml"
+//
+//                String src_en_sort = "/values/strings_sort.xml"
+//                String src_ko_sort = "/values-ko/strings-ko_sort.xml"
+//
+//                List<String> _old = [src_en, src_ko]
+//                List<String> _new = [src_en_sort, src_ko_sort]
+//
+//                for (i in 0..<_old.size()) {
+//                    List<NodeData> list = Utils.readXmlTNodeData(new File(src, _old[i]))
+//                    list = Utils.sortNodeData(list)
+//                    Utils.writeNodeDataToFile(new File(src, _new[i]), list)
+//                }
 
-                String src_en_sort = "/values/strings_sort.xml"
-                String src_ko_sort = "/values-ko/strings-ko_sort.xml"
-
-                List<String> _old = [src_en, src_ko]
-                List<String> _new = [src_en_sort, src_ko_sort]
-
-                for (i in 0..<_old.size()) {
-                    List<NodeData> list = Utils.readXmlTNodeData(new File(src, _old[i]))
-                    list = Utils.sortNodeData(list)
-                    Utils.writeNodeDataToFile(new File(src, _new[i]), list)
-                }
+                extension.opSrcs.forEach({fileName ->
+                    List<NodeData> list = Utils.readXmlTNodeData(new File(fileName))
+                    Utils.sortNodeData(list)
+                    Utils.writeNodeDataToFile(new File(Utils.newFileName(fileName, "sort")), list)
+                })
             }
         }
 
@@ -76,20 +82,25 @@ class EfoxPlugin implements Plugin<Project> {
             log('efoxResultSame')
             doLast {
                 // 先读取这个xml文件
-                String src = "/Users/flannery/Desktop/yy/Educator-android/common/commonres/src/main/res"
-                String src_en = "/values/strings.xml"
-                String src_en_new = "/values/strings_new.xml"
+//                String src = "/Users/flannery/Desktop/yy/Educator-android/common/commonres/src/main/res"
+//                String src_en = "/values/strings.xml"
+//                String src_en_new = "/values/strings_new.xml"
+//
+//                String src_ko = "/values-ko/strings-ko.xml"
+//                String src_ko_new = "/values-ko/strings-ko_new.xml"
+//
+//                List<String> _old = [src_en, src_ko]
+//                List<String> _new = [src_en_new, src_ko_new]
 
-                String src_ko = "/values-ko/strings-ko.xml"
-                String src_ko_new = "/values-ko/strings-ko_new.xml"
+                extension.opSrcs.forEach({filename ->
+                    HashMap<String, String> map = Utils.readXmlToHashMap_hasSameKey(new File(filename))
+                    Utils.writeHashMapToFileWithSort(new File(Utils.newFileName(filename, "new")), map)
+                })
 
-                List<String> _old = [src_en, src_ko]
-                List<String> _new = [src_en_new, src_ko_new]
-
-                for (i in 0..<_old.size()) {
-                    HashMap<String, String> map = Utils.readXmlToHashMap_hasSameKey(new File(src, _old[i]))
-                    Utils.writeHashMapToFileWithSort(new File(src, _new[i]), map)
-                }
+//                for (i in 0..<_old.size()) {
+//                    HashMap<String, String> map = Utils.readXmlToHashMap_hasSameKey(new File(src, _old[i]))
+//                    Utils.writeHashMapToFileWithSort(new File(src, _new[i]), map)
+//                }
             }
         }
 
@@ -124,8 +135,8 @@ class EfoxPlugin implements Plugin<Project> {
         project.task('compare2xml') {
             setGroup("efox")
             doLast {
-                String src = "/Users/flannery/Desktop/yy/TeacheeMaster-android/common/commonres/src/main/res/values/strings.xml";
-                String des = "/Users/flannery/Desktop/yy/TeacheeMaster-android/common/commonres/src/main/res/values-ko/strings-ko.xml";
+                String src = extension.opSrcs[0] // "/Users/flannery/Desktop/yy/TeacheeMaster-android/common/commonres/src/main/res/values/strings.xml";
+                String des = extension.opSrcs[1] // "/Users/flannery/Desktop/yy/TeacheeMaster-android/common/commonres/src/main/res/values-ko/strings-ko.xml";
                 println(src)
                 println(des)
                 Utils.compare2Xml(src, des)

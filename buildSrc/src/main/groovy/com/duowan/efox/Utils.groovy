@@ -35,7 +35,6 @@ final class Utils {
     }
 
     static List<NodeData> sortNodeData(List<NodeData> list) {
-        list.sort()
         list.sort(new Comparator<NodeData>() {
             @Override
             int compare(NodeData o1, NodeData o2) {
@@ -207,6 +206,7 @@ final class Utils {
 
     // 要做增量更新
     static void writeNodeDataToFile(File file, List<NodeData> list) {
+        println(file.absolutePath)
         BufferedWriter bufferedWriter = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(file, false)))
         bufferedWriter.writeLine("<?xml version=\"1.0\" encoding=\"utf-8\"?>")
         bufferedWriter.writeLine("<resources>")
@@ -268,5 +268,14 @@ final class Utils {
         }
     }
 
+    // strings.xml -> string_[suffix].xml
+    static String newFileName(String filename, String suffix) {
+        int index = filename.lastIndexOf(".")
+        if(index > 0) {
+            return filename.substring(0, index) + "_" + suffix + filename.substring(index)
+        } else {
+            return filename + "_" + suffix;
+        }
+    }
 
 }
