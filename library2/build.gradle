@@ -17,15 +17,12 @@ efox {
 
     // 额外的
 //    opSrcs = [
-//            "/Users/flannery/Desktop/yy/TeacheeMaster-android/common/commonres/src/main/res/values/strings.xml"
-//            , "/Users/flannery/Desktop/yy/TeacheeMaster-android/common/commonres/src/main/res/values-ko/strings-ko.xml"]
-//    opSrcs = [
-//            "/Users/flannery/Desktop/yy/TeacheeMaster-android/app/build/intermediates/incremental/mergeOfficialInternalGpDebugResources/merged.dir/values/values.xml",
-//            "/Users/flannery/Desktop/yy/TeacheeMaster-android/app/build/intermediates/incremental/mergeOfficialInternalGpDebugResources/merged.dir/values-ko/values-ko.xml"
+//            "/Users/flannery/Desktop/yy/TeacheeMaster-android/common/commonres/src/main/res/values/strings.xml",
+//            "/Users/flannery/Desktop/yy/TeacheeMaster-android/common/commonres/src/main/res/values-ko/strings-ko.xml"
 //    ]
     opSrcs = [
-            "/Users/flannery/Desktop/yy/Educator-android/common/commonres/src/main/res/values/strings.xml",
-            "/Users/flannery/Desktop/yy/Educator-android/common/commonres/src/main/res/values-ko/strings-ko.xml",
+            "/Users/flannery/Desktop/yy/GradleDownloadPlugin/原始数据/Educator/merged.dir/values/values.xml",
+            "/Users/flannery/Desktop/yy/GradleDownloadPlugin/原始数据/Educator/merged.dir/values-ko/values-ko.xml"
     ]
 }
 

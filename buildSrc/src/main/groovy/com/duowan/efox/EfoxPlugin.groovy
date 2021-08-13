@@ -10,9 +10,6 @@ class EfoxPlugin implements Plugin<Project> {
         println("[EfoxPlugin] $msg")
     }
 
-//    String opPath = "/Users/flannery/Desktop/yy/TeacheeMaster-android/common/commonres/src/main/res/values/strings.xml"
-//    String opPath = "/Users/flannery/Desktop/yy/Educator-android/common/commonres/src/main/res/values/strings.xml"
-//    String opPath = "/Users/flannery/Desktop/yy/Educator-android/common/commonres/src/main/res/values-ko/strings-ko.xml"
     String opPath = "/Users/flannery/Desktop/yy/GradleDownloadPlugin/library2/src/main/res/values/strings_same.xml"
     // 实现apply方法，注入插件的逻辑
     void apply(Project project) {
@@ -62,15 +59,22 @@ class EfoxPlugin implements Plugin<Project> {
         }
 
         // 将相同的key进行处理
-        project.task('efox_去重') {
+        project.task('efox_排序') {
             setGroup("efox")
             log('efoxResultSame')
             doLast {
                 // 先读取这个xml文件
 //                String src = "/Users/flannery/Desktop/yy/Educator-android/common/commonres/src/main/res"
                 extension.opSrcs.forEach({ filename ->
-                    HashMap<String, String> map = Utils.readXmlToHashMap_hasSameKey(new File(filename))
-                    Utils.writeHashMapToFileWithSort(new File(Utils.newFileName(filename, "new")), map)
+                    //HashMap<String, String> map = Utils.readXmlToHashMap_hasSameKey(new File(filename))
+                    //Utils.writeHashMapToFileWithSort(new File(Utils.newFileName(filename, "new")), map)
+                    // 1. 先读取本地文件
+                    Node node = NodeUtils.readNodeFromLocal(new File(filename))
+                    NodeUtils.filterNodeChilrenString(node)
+                    // 2. 进行排序
+                    NodeUtils.sortNodeChilren(node)
+                    // 3. 写到本地文件
+                    NodeUtils.writeNode2Local(node, new File(Utils.newFileName(filename, "sort")))
                 })
             }
         }
@@ -104,11 +108,34 @@ class EfoxPlugin implements Plugin<Project> {
 //            }
 //        }
 
-        project.task('efox_找出K相同V不同') {
+        project.task('efox_不同文件找出K相同V不同') {
             setGroup("efox")
             setDescription("KEY-VALUE都相同")
             doLast {
-//                String path = "/Users/flannery/Desktop/yy/TeacheeMaster-android/common/commonres/src/main/res/values-ko/strings-ko.xml"
+                String path_1 = "/Users/flannery/Desktop/yy/Educator-android/common/commonres/src/main/res/values-ko/strings-ko_sort.xml"
+                String path_2 = "/Users/flannery/Desktop/yy/GradleDownloadPlugin/原始数据/Educator/merged.dir/values-ko/values-ko_sort.xml"
+                Node node_1 = NodeUtils.readNodeFromLocal(new File(path_1))
+                Node node_2 = NodeUtils.readNodeFromLocal(new File(path_2)) // 总的
+                // 比较两个node
+                List<NodeData> listResult = NodeUtils.findSameKV(node_1, node_2)
+
+                // 打印出来
+                listResult.forEach({ NodeData data ->
+                    if (data.oldValue != "") {
+                        println("[samekv] " + data.key)
+                        println("[samekv] >>>>>>>> " + data.value)
+                        println("[samekv] >>>>>>>> " + data.oldValue)
+                        println()
+                        println()
+                    }
+                })
+            }
+        }
+
+        project.task('efox_同一文件找出K相同V不同') {
+            setGroup("efox")
+            setDescription("KEY-VALUE都相同")
+            doLast {
                 String path = opPath
                 // 先读取
                 List<NodeData> listNode = Utils.readXmlTNodeData(new File(path))
@@ -120,13 +147,10 @@ class EfoxPlugin implements Plugin<Project> {
             }
         }
 
-        project.task('efox_找出K-V都相同') {
+        project.task('efox_同一文件找出K-V都相同') {
             setGroup("efox")
             setDescription("KEY-VALUE都相同")
             doLast {
-//                String path = "/Users/flannery/Desktop/yy/TeacheeMaster-android/common/commonres/src/main/res/values-ko/strings-ko.xml"
-                // 先读取
-//                String path = "/Users/flannery/Desktop/yy/TeacheeMaster-android/common/commonres/src/main/res/values/strings.xml"
                 String path = opPath
                 List<NodeData> listNode = Utils.readXmlTNodeData(new File(path))
                 List<NodeData> listResult = Utils.findSameKV(listNode, true)

@@ -9,4 +9,10 @@ class NodeData {
         this.key = key
         this.value = value
     }
+
+    NodeData(String key, String value, String oldValue) {
+        this.key = key
+        this.value = value
+        this.oldValue = oldValue
+    }
 }
