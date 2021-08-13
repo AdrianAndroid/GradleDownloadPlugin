@@ -1,10 +1,12 @@
 package com.duowan.efox
 
+import groovy.xml.XmlUtil
 import org.codehaus.groovy.runtime.typehandling.DefaultTypeTransformation
 
 import java.util.regex.Matcher
 import java.util.regex.Pattern
 
+// https://blog.csdn.net/LjingDong/article/details/86289243
 final class Utils {
 
 
@@ -64,6 +66,8 @@ final class Utils {
                     list.add(new NodeData(key, ''))
                     println("$it 不符合要求!! 保留key，放入了空值")
                 }
+            } else {
+                println("不是Node 或者 不是string >>" + (it instanceof Node) + "<<")
             }
         })
         println ">>>>>>>读取xml结束>>>>>>>>>>>>>>>>>>>>>"
@@ -162,6 +166,28 @@ final class Utils {
         result.put(KEY_DIFF_SRC, diffMapSRC)
         return result
     }
+
+    static List<NodeData> findSameKV(List<NodeData> listNode, Boolean sameV) {
+        if (listNode == null || listNode.size() < 1) return new ArrayList<>()
+        // 创建一个新的
+        HashMap<String, NodeData> hashMap = new HashMap<>();
+        List<NodeData> listResult = new ArrayList<>();
+        listNode.forEach({ NodeData node ->
+            if (hashMap.containsKey(node.key)) {
+                NodeData preNode = hashMap.get(node.key)
+                if (sameV && preNode.value == node.value) {
+                    listResult.add(node)
+                } else {
+                    node.oldValue = preNode.value
+                    listResult.add(node)
+                }
+            } else {
+                hashMap.put(node.key, node)
+            }
+        })
+        return listResult
+    }
+
 
     static void printMap(Map<String, String> map) {
         println("-------------")
@@ -271,11 +297,84 @@ final class Utils {
     // strings.xml -> string_[suffix].xml
     static String newFileName(String filename, String suffix) {
         int index = filename.lastIndexOf(".")
-        if(index > 0) {
+        if (index > 0) {
             return filename.substring(0, index) + "_" + suffix + filename.substring(index)
         } else {
             return filename + "_" + suffix;
         }
+    }
+
+    // 读取XML文件
+    public static NodeList node_readXmls(File xmlFile) {
+//        if(!xmlFile.exists() && xmlFile.size() <= 0) return  new NodeList()
+        def xml = new XmlParser().parse(xmlFile)
+        println "xml instanceof Node =" + (xml instanceof Node)
+        println "xml.children() instanceof NodeList =" + (xml.children() instanceof NodeList)
+//        println xml.children()
+        println xml.parent()
+        println xml.name()
+        println "xml.value() instanceof NodeList = " + (xml.value() instanceof NodeList)
+    }
+
+
+    public static void node_writeXmls() {
+
+        Node node = new Node(null, "resources")
+//        Node parent, Object name, Map attributes, Object value
+//        childNode.attribute(d)
+        node.append(new Node(node, "string", ["hello_key":"hello_value"]))
+        String fileName = "/Users/flannery/Desktop/yy/GradleDownloadPlugin/buildSrc/src/main/groovy/com/duowan/efox/configNewToString.xml"
+        FileWriter fileWriter = new FileWriter(fileName)
+        XmlNodePrinter nodePrinter = new XmlNodePrinter(new PrintWriter(fileWriter))
+        nodePrinter.setPreserveWhitespace(true)
+        nodePrinter.print(node)
+
+    }
+
+
+    public static xmls() {
+        /*关闭解析器的验证，不去下载外部dtd文件来对xml进行验证
+      <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+      */
+        def parser = new XmlParser();
+        parser.setFeature("http://apache.org/xml/features/disallow-doctype-decl", false);
+        parser.setFeature("http://apache.org/xml/features/nonvalidating/load-external-dtd", false);
+
+        def file = new File("/Users/flannery/Desktop/yy/GradleDownloadPlugin/library2/src/main/res/values/strings_same.xml");
+        def config = parser.parse(file);//解析xml文件
+
+//        if (config.value() instanceof NodeList) {
+//            NodeList nodes = config.value()
+//            nodes.forEach({ Node n ->
+//                println(n.name() + " , " + n.attributes() + " , " + n.text())
+//            })
+//        }
+
+//        XmlWriter
+
+        //获取xml里面属性为version的值,version="1.0"
+        def version = config.attributes().get("version");//1.0
+//        def dict = config.dict;
+
+//        config.attributes().put("version", "123");//将属性值"1.0"改为"123"
+//
+//        //打印属性为name的值,name="云办公呀呀呀"
+//        println config.attributes().get("name");//云办公呀呀呀
+////        println "${config.attribute('version')}"
+//        println config.dict.array.dict.array.dict[0].string[1].text();//获取标签值并打印
+//
+//
+//        //修改标签值
+//        config.dict.array.dict.array.dict[0].string[1].value()[0] = "123456"
+
+
+        // /Users/flannery/Desktop/yy/GradleDownloadPlugin/buildSrc/src/main/groovy/com/duowan/efox/oa.plist
+        def xmlFile = "/Users/flannery/Desktop/yy/GradleDownloadPlugin/buildSrc/src/main/groovy/com/duowan/efox/configNewToString.xml";
+        //用UTF-8写入,默认为GBK,不然会有乱码
+        PrintWriter pw = new PrintWriter(xmlFile, ("UTF-8"));
+//        PrintWriter pw = new PrintWriter(xmlFile,("GBK"));
+        pw.write(XmlUtil.serialize(config));//用XmlUtil.serialize方法,将String改为xml格式
+        pw.close();
     }
 
 }

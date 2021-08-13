@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="Kakao">Kakao</string>
+    <string name="KakaoTalk">KakaoTalk</string>
+    <string name="Naver">Naver</string>
+    <string name="back_to_homepage1">Back to Homepage</string>
+    <string name="comment_input_format">"@%s"</string>
+    <string name="comment_ref_format">"@%s "</string>
+    <string name="file_not_exists">The picture is corrupted. Please select others</string>
+    <string name="login_role_out_of_limit_from_sign_up">Welcome to register! There are a large number of registrants now. Please contact the institution to process.</string>
+    <string name="permission_tip1">You do not have access to Camera and Storage. Please go to Settings and Allow access!</string>
+    <string name="refund_str1_1">Dear student, the tuition fee for </string>
+    <string name="refund_str1_2">has been refunded successfully. \nThank you for your support！</string>
+</resources>

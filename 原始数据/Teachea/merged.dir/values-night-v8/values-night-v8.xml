@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="zm_addon_title_github_bg">@color/zm_v1_gray_F900</color>
+    <color name="zm_addon_title_gitlab_bg">@color/zm_v1_gray_F900</color>
+    <color name="zm_addon_title_jira_bg">@color/zm_v1_gray_F900</color>
+    <color name="zm_addon_title_normal_bg">@color/zm_v1_gray_F900</color>
+    <color name="zm_announcement_bkg">@color/zm_v1_gray_1400</color>
+    <color name="zm_chat_msg_bg_e2e_success_normal_19884">@color/zm_v1_blue_C600</color>
+    <color name="zm_chat_typing_bg">@color/zm_v1_gray_1400</color>
+    <color name="zm_chat_typing_text">@color/zm_v1_white_alpha54</color>
+    <color name="zm_color_accent">@color/zm_v1_blue_B400</color>
+    <color name="zm_highlight_disabled">@color/zm_v1_gray_D300</color>
+    <color name="zm_im_search_shadow">@color/zm_v1_white_alpha9</color>
+    <color name="zm_item_highlight">@color/zm_v1_white_alpha9</color>
+    <color name="zm_item_highlight_pressed">@color/zm_v1_white_alpha18</color>
+    <color name="zm_line_divider">@color/zm_v1_white_alpha9</color>
+    <color name="zm_pbx_sms_bg_sent">@color/zm_v1_green_700_alpha10</color>
+    <color name="zm_pop_bkg">@color/zm_v1_gray_1400</color>
+    <color name="zm_pop_stroke">@color/zm_v1_white_alpha18</color>
+    <color name="zm_split_bg">@color/zm_v1_white_alpha9</color>
+    <color name="zm_text_disable">@color/zm_v1_gray_D300</color>
+    <color name="zm_v2_arrow">@color/zm_v1_white_500</color>
+    <color name="zm_v2_arrow_right">@color/zm_v1_gray_D300</color>
+    <color name="zm_v2_avatar_border">@color/zm_v1_black_alpha0</color>
+    <color name="zm_v2_bg_pressed">@color/zm_v1_white_alpha27</color>
+    <color name="zm_v2_bg_red">@color/zm_v1_red_400</color>
+    <color name="zm_v2_border_disabled">@color/zm_v1_gray_D300</color>
+    <color name="zm_v2_bottom_sheet_top_bar">@color/zm_v1_white_alpha54</color>
+    <color name="zm_v2_btn_desctructive">@color/zm_v1_red_A900</color>
+    <color name="zm_v2_btn_gray_bkg">@color/zm_v1_white_alpha18</color>
+    <color name="zm_v2_btn_txt_blue_disabled">@color/zm_v1_gray_D300</color>
+    <color name="zm_v2_btn_txt_blue_normal">@color/zm_v1_blue_B400</color>
+    <color name="zm_v2_cell_divider">@color/zm_v1_white_alpha9</color>
+    <color name="zm_v2_gray_E4E4ED">@color/zm_v1_gray_1800</color>
+    <color name="zm_v2_gray_bg">@color/zm_v1_gray_E400</color>
+    <color name="zm_v2_head">@color/zm_v1_gray_1800</color>
+    <color name="zm_v2_light_bg_normal">@color/zm_v1_white_alpha9</color>
+    <color name="zm_v2_light_bg_opaque">@color/zm_v1_gray_F900</color>
+    <color name="zm_v2_light_bg_selected">@color/zm_v1_white_alpha18</color>
+    <color name="zm_v2_light_blue">@color/zm_v1_blue_C600</color>
+    <color name="zm_v2_meeting_normal_btn_fill">@color/zm_v1_gray_1400</color>
+    <color name="zm_v2_meeting_normal_btn_fill_disabled">@color/zm_v1_gray_D300</color>
+    <color name="zm_v2_meeting_normal_btn_stroke">@color/zm_v1_white_alpha0</color>
+    <color name="zm_v2_meeting_normal_btn_stroke_disabled">@color/zm_v1_gray_D300</color>
+    <color name="zm_v2_meeting_normal_btn_text">@color/zm_v1_white_500</color>
+    <color name="zm_v2_meeting_normal_label">@color/zm_v1_gray_1400</color>
+    <color name="zm_v2_meeting_normal_tab_bg">@color/zm_v1_white_500</color>
+    <color name="zm_v2_meeting_normal_tab_text_selected">@color/zm_v1_black_200</color>
+    <color name="zm_v2_meeting_normal_tab_text_unselected">@color/zm_v1_white_500</color>
+    <color name="zm_v2_msg_bg_from">@color/zm_v1_gray_1400</color>
+    <color name="zm_v2_plist_item_guest_bg">@color/zm_v1_red_300_alpha8</color>
+    <color name="zm_v2_plist_item_normal_bg">@color/zm_v1_gray_1400</color>
+    <color name="zm_v2_primary_btn_disabled">@color/zm_v1_white_alpha9</color>
+    <color name="zm_v2_primary_btn_white_disabled">@color/zm_v1_gray_D300</color>
+    <color name="zm_v2_schedule_force_tip_bg">@color/zm_v1_gray_1400</color>
+    <color name="zm_v2_schedule_force_tip_text">@color/zm_v1_white_500</color>
+    <color name="zm_v2_search_filter_bg">@color/zm_v1_gray_1800</color>
+    <color name="zm_v2_secondary_btn_disabled">@color/zm_v1_white_alpha9</color>
+    <color name="zm_v2_secondary_btn_focused">@color/zm_v1_white_alpha9</color>
+    <color name="zm_v2_secondary_btn_normal">@color/zm_v1_white_alpha9</color>
+    <color name="zm_v2_secondary_btn_pressed">@color/zm_v1_white_alpha18</color>
+    <color name="zm_v2_secondary_btn_stroke">@color/zm_v1_gray_D300</color>
+    <color name="zm_v2_sip_dialpad_key_selected">@color/zm_v1_white_500</color>
+    <color name="zm_v2_svg_avatar_1">@color/zm_v1_white</color>
+    <color name="zm_v2_svg_avatar_2">@color/zm_v1_gray_1400</color>
+    <color name="zm_v2_svg_avatar_3">@color/zm_v1_white_500</color>
+    <color name="zm_v2_svg_ic_indicator">@color/zm_v1_white_500</color>
+    <color name="zm_v2_svg_reaction">@color/zm_v1_white_alpha54</color>
+    <color name="zm_v2_svg_setting_divider">@color/zm_v1_white_alpha9</color>
+    <color name="zm_v2_svg_setting_option">@color/zm_v1_gray_1400</color>
+    <color name="zm_v2_svg_sip_avatar_bg1">@color/zm_v1_blue_B400_alpha3</color>
+    <color name="zm_v2_svg_sip_avatar_bg2">@color/zm_v1_blue_B400_alpha8</color>
+    <color name="zm_v2_svg_wlc_bg_color_1">@color/zm_v1_gray_1800</color>
+    <color name="zm_v2_svg_wlc_bg_color_2">@color/zm_v1_gray_D300</color>
+    <color name="zm_v2_svg_wlc_bg_color_3">@color/zm_v1_gray_B500</color>
+    <color name="zm_v2_svg_wlc_bg_color_4">@color/zm_v1_white_alpha18</color>
+    <color name="zm_v2_tab">@color/zm_v1_black_200</color>
+    <color name="zm_v2_tab_bg_normal">@color/zm_v1_gray_B600</color>
+    <color name="zm_v2_tab_bg_select">@color/zm_v1_white_500</color>
+    <color name="zm_v2_tab_path_normal">@color/zm_v1_white</color>
+    <color name="zm_v2_tab_path_selected">@color/zm_v1_white_500</color>
+    <color name="zm_v2_text_btn_blue_disable">@color/zm_v1_white_alpha9</color>
+    <color name="zm_v2_title_tab_textcolor_select">@color/zm_v1_white_500</color>
+    <color name="zm_v2_title_tab_textcolor_unselect">@color/zm_v1_white_alpha54</color>
+    <color name="zm_v2_txt_action">@color/zm_v1_blue_B400</color>
+    <color name="zm_v2_txt_action_disable">@color/zm_v1_blue_B400_alpha60</color>
+    <color name="zm_v2_txt_desctructive">@color/zm_v1_red_200</color>
+    <color name="zm_v2_txt_placeholder">@color/zm_v1_gray_D300</color>
+    <color name="zm_v2_txt_primary">@color/zm_v1_white_500</color>
+    <color name="zm_v2_txt_secondary">@color/zm_v1_white_alpha54</color>
+    <color name="zm_v2_txt_success">@color/zm_v1_green_700</color>
+    <color name="zm_v2_txt_title_header">@color/zm_v1_white_500</color>
+    <color name="zm_v2_waiting_room_button_bg">@color/zm_v1_gray_1400</color>
+    <color name="zm_v2_waiting_room_button_content">@color/zm_v1_white_500</color>
+    <color name="zm_v2_white_on_title_search">@color/zm_v2_light_bg_ondark</color>
+    <color name="zm_v2_window_gb">@color/zm_v1_gray_1800</color>
+    <color name="zm_white">@color/zm_v1_gray_1800</color>
+    <style name="Theme.AppCompat.DayNight" parent="Theme.AppCompat"/>
+    <style name="Theme.AppCompat.DayNight.DarkActionBar" parent="Theme.AppCompat"/>
+    <style name="Theme.AppCompat.DayNight.Dialog" parent="Theme.AppCompat.Dialog"/>
+    <style name="Theme.AppCompat.DayNight.Dialog.Alert" parent="Theme.AppCompat.Dialog.Alert"/>
+    <style name="Theme.AppCompat.DayNight.Dialog.MinWidth" parent="Theme.AppCompat.Dialog.MinWidth"/>
+    <style name="Theme.AppCompat.DayNight.DialogWhenLarge" parent="Theme.AppCompat.DialogWhenLarge"/>
+    <style name="Theme.AppCompat.DayNight.NoActionBar" parent="Theme.AppCompat.NoActionBar"/>
+    <style name="Theme.MaterialComponents.DayNight" parent="Theme.MaterialComponents"/>
+    <style name="Theme.MaterialComponents.DayNight.BottomSheetDialog" parent="Theme.MaterialComponents.BottomSheetDialog"/>
+    <style name="Theme.MaterialComponents.DayNight.Bridge" parent="Theme.MaterialComponents.Bridge"/>
+    <style name="Theme.MaterialComponents.DayNight.DarkActionBar" parent="Theme.MaterialComponents"/>
+    <style name="Theme.MaterialComponents.DayNight.DarkActionBar.Bridge" parent="Theme.MaterialComponents.Bridge"/>
+    <style name="Theme.MaterialComponents.DayNight.Dialog" parent="Theme.MaterialComponents.Dialog"/>
+    <style name="Theme.MaterialComponents.DayNight.Dialog.Alert" parent="Theme.MaterialComponents.Dialog.Alert"/>
+    <style name="Theme.MaterialComponents.DayNight.Dialog.Alert.Bridge" parent="Theme.MaterialComponents.Dialog.Alert.Bridge"/>
+    <style name="Theme.MaterialComponents.DayNight.Dialog.Bridge" parent="Theme.MaterialComponents.Dialog.Bridge"/>
+    <style name="Theme.MaterialComponents.DayNight.Dialog.FixedSize" parent="Theme.MaterialComponents.Dialog.FixedSize"/>
+    <style name="Theme.MaterialComponents.DayNight.Dialog.FixedSize.Bridge" parent="Theme.MaterialComponents.Dialog.FixedSize.Bridge"/>
+    <style name="Theme.MaterialComponents.DayNight.Dialog.MinWidth" parent="Theme.MaterialComponents.Dialog.MinWidth"/>
+    <style name="Theme.MaterialComponents.DayNight.Dialog.MinWidth.Bridge" parent="Theme.MaterialComponents.Dialog.MinWidth.Bridge"/>
+    <style name="Theme.MaterialComponents.DayNight.DialogWhenLarge" parent="Theme.MaterialComponents.DialogWhenLarge"/>
+    <style name="Theme.MaterialComponents.DayNight.NoActionBar" parent="Theme.MaterialComponents.NoActionBar"/>
+    <style name="Theme.MaterialComponents.DayNight.NoActionBar.Bridge" parent="Theme.MaterialComponents.NoActionBar.Bridge"/>
+    <style name="ThemeOverlay.AppCompat.DayNight" parent="ThemeOverlay.AppCompat.Dark"/>
+    <style name="ThemeOverlay.MaterialComponents.DayNight.BottomSheetDialog" parent="ThemeOverlay.MaterialComponents.BottomSheetDialog"/>
+    <style name="Widget.MaterialComponents.ActionBar.PrimarySurface" parent="Widget.MaterialComponents.ActionBar.Surface"/>
+    <style name="Widget.MaterialComponents.AppBarLayout.PrimarySurface" parent="Widget.MaterialComponents.AppBarLayout.Surface"/>
+    <style name="Widget.MaterialComponents.BottomAppBar.PrimarySurface" parent="Widget.MaterialComponents.BottomAppBar"/>
+    <style name="Widget.MaterialComponents.BottomNavigationView.PrimarySurface" parent="Widget.MaterialComponents.BottomNavigationView"/>
+    <style name="Widget.MaterialComponents.TabLayout.PrimarySurface" parent="Widget.MaterialComponents.TabLayout"/>
+    <style name="Widget.MaterialComponents.Toolbar.PrimarySurface" parent="Widget.MaterialComponents.Toolbar.Surface"/>
+</resources>
