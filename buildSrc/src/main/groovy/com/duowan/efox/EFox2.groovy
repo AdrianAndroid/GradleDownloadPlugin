@@ -163,7 +163,6 @@ class EFox2 {
         return hashMap
     }
 
-
     // 将xml写入本地文件
     private void writeLogToFile(File file, String log) {
         BufferedWriter bufferedWriter = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(file, true)))
