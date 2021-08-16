@@ -1,0 +1,46 @@
+apply plugin: 'groovy'
+apply plugin: 'maven'
+apply plugin: 'maven-publish'
+
+repositories {
+    maven { url 'http://repo.duowan.com:8181/nexus/content/groups/public' }
+    jcenter()
+    google()
+}
+
+dependencies {
+    implementation gradleApi()
+    implementation localGroovy()
+    implementation 'com.android.tools.build:gradle:4.2.1'
+    implementation 'org.ow2.asm:asm:7.0'
+    implementation 'commons-io:commons-io:2.8.0'
+    implementation 'org.apache.poi:poi:4.1.2' // excel表格操作
+    implementation 'org.apache.poi:poi-ooxml:4.1.2' // excel表格操作
+}
+
+apply from: 'publish_common.gradle'
+ext.addPublishPluginTask('gradle-flavor')
+//
+uploadArchives {
+    repositories.mavenDeployer {
+        repository(url: uri('../repo'))
+        pom.groupId = "com.duowan.efox"
+        pom.artifactId = "efox-down"
+        pom.version = "0.0.1"
+    }
+}
+
+task groovydocJar(type: Jar, dependsOn: groovydoc) {
+    classifier = 'javadoc'
+    from groovydoc.getDestinationDir()
+}
+
+task sourcesJar(type: Jar, dependsOn: classes) {
+    classifier = 'sources'
+    from sourceSets.main.allSource
+}
+
+artifacts {
+    archives groovydocJar
+    archives sourcesJar
+}

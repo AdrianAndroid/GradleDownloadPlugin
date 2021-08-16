@@ -1,0 +1,133 @@
+apply plugin: 'maven-publish'
+apply plugin: 'signing'
+
+group = "com.ques.plugins"
+version= "0.0.24"
+
+def isReleaseBuild() {
+    return version.contains("SNAPSHOT") == false
+}
+
+def getReleaseRepositoryUrl() {
+    return hasProperty('RELEASE_REPOSITORY_URL') ? RELEASE_REPOSITORY_URL
+            : "https://oss.sonatype.org/service/local/staging/deploy/maven2/"
+}
+
+def getSnapshotRepositoryUrl() {
+    return hasProperty('SNAPSHOT_REPOSITORY_URL') ? SNAPSHOT_REPOSITORY_URL
+            : "https://oss.sonatype.org/content/repositories/snapshots/"
+}
+
+def getRepositoryUsername() {
+    return hasProperty('NEXUS_USERNAME') ? NEXUS_USERNAME : ""
+}
+
+def getRepositoryPassword() {
+    return hasProperty('NEXUS_PASSWORD') ? NEXUS_PASSWORD : ""
+}
+
+task androidSourcesJar(type: Jar) {
+    classifier = 'sources'
+    if (project.hasProperty("android")) {
+        from android.sourceSets.main.java.sourceFiles
+    }
+}
+
+task androidNativeJar(type: Jar) {
+    classifier = 'so'
+    from(new File(buildDir, 'libs'))
+    include("**/*.so")
+}
+
+task androidNativeZip(type: Zip) {
+    classifier = 'so'
+    from(new File(buildDir, 'libs'))
+    include("**/*.so")
+}
+
+publishing {
+    repositories {
+        maven {
+            credentials {
+                username = getRepositoryUsername()
+                password = getRepositoryPassword()
+            }
+
+            if (isReleaseBuild()) {
+                url getReleaseRepositoryUrl()
+            } else {
+                url getSnapshotRepositoryUrl()
+            }
+        }
+    }
+}
+
+ext.addPublishTask = this.&_addPublishTask
+
+def _addPublishTask(String libArtifact, String outputFilePath) {
+    publishing {
+        publications {
+            maven(MavenPublication) {
+                groupId group
+                artifactId libArtifact
+                // Tell maven to prepare the generated "*.aar" file for publishing
+                artifact(outputFilePath)
+                artifact androidSourcesJar
+                // Tell maven to prepare the generated "*.aar" file for publishing
+                pom.withXml {
+                    //Creating additional node for dependencies
+                    def dependenciesNode = asNode().appendNode('dependencies')
+
+                    //Defining configuration names from which dependencies will be taken (debugCompile or releaseCompile and compile)
+                    def configurationNames = ["releaseCompile", 'compile', 'api', "implementation"]
+                    configurationNames.each { configurationName ->
+                        if (!configurations.names.contains(configurationName)) {
+                            return
+                        }
+                        configurations[configurationName].allDependencies.each {
+                            if (it.group != null && it.name != null) {
+                                def dependencyNode = dependenciesNode.appendNode('dependency')
+                                dependencyNode.appendNode('groupId', it.group)
+                                dependencyNode.appendNode('artifactId', it.name)
+                                dependencyNode.appendNode('version', it.version)
+
+                                //If there are any exclusions in dependency
+                                if (it.excludeRules.size() > 0) {
+                                    def exclusionsNode = dependencyNode.appendNode('exclusions')
+                                    it.excludeRules.each { rule ->
+                                        def exclusionNode = exclusionsNode.appendNode('exclusion')
+                                        exclusionNode.appendNode('groupId', rule.group)
+                                        exclusionNode.appendNode('artifactId', rule.module)
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+        }
+    }
+}
+
+publish.dependsOn build
+publishToMavenLocal.dependsOn build
+
+//Fixed Fixed gradle will package annotation class in second build;for detail see java.lang.annotation.RetentionPolicy.SOURCE
+tasks.whenTaskAdded { task ->
+    if (task.name == "extractReleaseAnnotations" || task.name == "extractDebugAnnotations") {
+        task.outputs.upToDateWhen { false }
+    }
+    if (task.name == "publishMavenPublicationToMavenRepository") {
+        task.dependsOn build
+    }
+}
+
+ext.addPublishPluginTask = this.&_addPublishPluginTask
+// '/data/DUOWAN_BUILD/mobilebuild/balloon/develop/buildSrc/build/libs/buildSrc-unspecified.jar'
+def _addPublishPluginTask(String libArtifact) {
+    print("_addPublishPluginTask:$buildDir/libs/${project.getName()}-${version}.jar")
+    ext.addPublishTask(libArtifact, "$buildDir/libs/${project.getName()}-${version}.jar")
+}
+
+
