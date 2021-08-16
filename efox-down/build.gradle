@@ -19,8 +19,8 @@ dependencies {
 }
 
 apply from: 'publish_common.gradle'
-ext.addPublishPluginTask('gradle-flavor')
-//
+//ext.addPublishPluginTask('gradle-flavor')
+
 uploadArchives {
     repositories.mavenDeployer {
         repository(url: uri('../repo'))
