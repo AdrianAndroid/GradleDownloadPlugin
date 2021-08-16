@@ -45,18 +45,6 @@ class EfoxPlugin implements Plugin<Project> {
                 println("==============")
             }
         }
-//        // 文件排序，不做操作 <string>
-//        project.task('efoxSort') {
-//            setGroup("efox")
-//            doLast {
-////              String src = "/Users/flannery/Desktop/yy/Educator-android/common/commonres/src/main/res"
-//                extension.opSrcs.forEach({ fileName ->
-//                    List<NodeData> list = Utils.readXmlTNodeData(new File(fileName))
-//                    Utils.sortNodeData(list)
-//                    Utils.writeNodeDataToFile(new File(Utils.newFileName(fileName, "sort")), list)
-//                })
-//            }
-//        }
 
         // 将相同的key进行处理
         project.task('efox_排序') {
@@ -64,10 +52,7 @@ class EfoxPlugin implements Plugin<Project> {
             log('efoxResultSame')
             doLast {
                 // 先读取这个xml文件
-//                String src = "/Users/flannery/Desktop/yy/Educator-android/common/commonres/src/main/res"
                 extension.opSrcs.forEach({ filename ->
-                    //HashMap<String, String> map = Utils.readXmlToHashMap_hasSameKey(new File(filename))
-                    //Utils.writeHashMapToFileWithSort(new File(Utils.newFileName(filename, "new")), map)
                     // 1. 先读取本地文件
                     Node node = NodeUtils.readNodeFromLocal(new File(filename))
                     NodeUtils.filterNodeChilrenString(node)
@@ -78,33 +63,16 @@ class EfoxPlugin implements Plugin<Project> {
                 })
             }
         }
-
-        //project.task('efox_' +)
-
-        // 创建一个新的task
-        project.task('efoxdownload') {
-            setGroup("efox")
-            log('efoxdownload')
-            doLast {
-                log(" ${extension.message}")
-                log(" ${project.getProjectDir().absolutePath} ")
-                EFox efox = new EFox(extension, project)
-                efox.downloadEFox()
-                //downloadEfox(project)
-            }
-        }
-
-        // 清空values文件夹， 应该只是清空commonstring.xml 文件
-//        project.task('efoxclean') {
+//        // 创建一个新的task
+//        project.task('efoxdownload') {
 //            setGroup("efox")
-//            log('efoxclean')
+//            log('efoxdownload')
 //            doLast {
-//                log('efoxclean')
-//                File resFile = new File(project.getProjectDir(), extension.resPath)
-//                if (resFile.exists()) {
-//                    Utils.deleteCommonFiles(resFile, extension.resName)
-//                }
-//                log('efoxclean done!')
+//                log(" ${extension.message}")
+//                log(" ${project.getProjectDir().absolutePath} ")
+//                EFox efox = new EFox(extension, project)
+//                efox.downloadEFox()
+//                //downloadEfox(project)
 //            }
 //        }
 
@@ -137,9 +105,7 @@ class EfoxPlugin implements Plugin<Project> {
             setDescription("KEY-VALUE都相同")
             doLast {
                 extension.opSrcs.forEach({ path ->
-
                     println("[efox]=========${path}")
-
                     Map<String, List<NodeData>> map = NodeUtils.findSameKv2(new File(path))
                     map.forEach({ key, list ->
                         list.forEach({ nd ->
@@ -156,9 +122,7 @@ class EfoxPlugin implements Plugin<Project> {
             setDescription("KEY-VALUE都相同")
             doLast {
                 extension.opSrcs.forEach({ path ->
-
                     println("[efox]=========${path}")
-
                     Map<String, List<NodeData>> map = NodeUtils.findSameKv2(new File(path))
                     map.forEach({ key, list ->
                         list.forEach({ nd ->
@@ -188,9 +152,7 @@ class EfoxPlugin implements Plugin<Project> {
             setGroup("efox")
             doLast {
                 String src = extension.opSrcs[0]
-                // "/Users/flannery/Desktop/yy/TeacheeMaster-android/common/commonres/src/main/res/values/strings.xml";
                 String des = extension.opSrcs[1]
-                // "/Users/flannery/Desktop/yy/TeacheeMaster-android/common/commonres/src/main/res/values-ko/strings-ko.xml";
                 println(src)
                 println(des)
                 Utils.compare2Xml(src, des)
@@ -201,9 +163,6 @@ class EfoxPlugin implements Plugin<Project> {
         project.task('efox_相同和不相同的key分开') {
             setGroup("efox")
             doLast {
-//                String from = "/Users/flannery/Desktop/yy/TeacheeMaster-android/common/commonres/src/main/res"
-//                String src_en = "/values/strings.xml"
-//                String src_ko = "/values-ko/strings-ko.xml"
 
                 String src_en = extension.opSrcs[0]
                 String src_ko = extension.opSrcs[1]
@@ -211,11 +170,6 @@ class EfoxPlugin implements Plugin<Project> {
                 Map<String, String> from_en = Utils.readXmlToHashMap(new File(src_en))
                 Map<String, String> from_ko = Utils.readXmlToHashMap(new File(src_ko));
 
-//                String to = "/Users/flannery/Desktop/yy/GradleDownloadPlugin/library2/src/main/res";
-//                String des_en = "/values/strings_same.xml"
-//                String des_en_diff = "/values/strings_diff.xml"
-//                String des_ko = "/values-ko/strings_same.xml"
-//                String des_ko_diff = "/values-ko/strings_diff.xml"
                 HashMap<String, String> to_map = Utils.differenceSRC(from_en, from_ko)
                 HashMap<String, String> en_same = to_map.get(Utils.KEY_SAME_SRC)
                 HashMap<String, String> en_diff = to_map.get(Utils.KEY_DIFF_SRC)
@@ -264,15 +218,3 @@ class EfoxPlugin implements Plugin<Project> {
         }
     }
 }
-
-// --------》排序
-//     println("===================")
-//     String src = "/Users/flannery/Desktop/yy/GradleDownloadPlugin/原始数据/Teachea/merged.dir/values/values.xml"
-//     // 1. 先读取
-//     Node node = NodeUtils.readNodeFromLocal(new File(src)) //先读取
-//     // 2. 再筛选
-//     NodeUtils.filterNodeChilrenString(node)
-//     // 3. 在排序
-//     NodeUtils.sortNodeChilren(node)
-//     // 4. 写入本地
-//     NodeUtils.writeNode2Local(node, new File(Utils.newFileName(src, "nodes")))

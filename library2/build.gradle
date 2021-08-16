@@ -10,8 +10,7 @@ efox {
     urlFomat = "http://multi-lang.duowan.com/multiLangBig/Teachee/%s/%s" // 地址模版
     //resName = "commonstring.xml" //通用的名称
     resPath = "src/main/res" // 该工程的这个路径下
-    efoxPath = "iOS_1_9_0___1_9_0" //"Teachee___2_3_0" //需要修改
-    efoxPaths = ["iOS_1_9_0___1_9_0", "Teachee___2_3_0"]
+    efoxPaths = ["Teachee_old___1_0_0", "iOS_1_9_0___1_9_0", "Teachee___2_3_0"]
     valuesDir = ["values": "en", "values-ko": "ko"] //下载几种格式
     valueReplace = ["&": "&amp;", "%@": "%s", "\\'": "\\\\'", '\'': '\\'] // 特殊符号替换
 
