@@ -25,7 +25,7 @@ class EfoxPlugin implements Plugin<Project> {
                     setGroup('efox')
                     doLast {
                         EFox2 efox2 = new EFox2(extension, project, pathName)
-                        efox2.downloadEFox()
+                        efox2.downloadEFOX_2()
                     }
                 }
             })
@@ -209,11 +209,20 @@ class EfoxPlugin implements Plugin<Project> {
         project.task('efox_测试') {
             setGroup("efox")
             doLast {
-                println("测试大小写！")
-                HashMap<String, String> map = new HashMap<>();
-                map.put("Cancel", "Cancel")
-                map.put("cancel", "cancel")
-                println(map)
+                println("efox_测试！")
+//                File resFile = new File("/Users/flannery/Desktop/yy/GradleDownloadPlugin/library2/src/main/res/values/strings_same.xml")
+//                Node node = NodeUtils.readNodeFromLocal()
+
+//                resFile.delete()
+
+                Node res = new Node(null, "resources")
+                // 创建child
+                //<string name="Kakao">Kakao</string>
+                Node newNode = new Node(null, "string", ["name" : "hello_world"], "value3")
+                res.append(newNode)
+//                res.appendNode("string", ["name" : "hello_world"], "value")
+
+                NodeUtils.writeNode2Local(res , new File("/Users/flannery/Desktop/yy/GradleDownloadPlugin/library2/src/main/res/values/strings_write.xml"))
             }
         }
     }

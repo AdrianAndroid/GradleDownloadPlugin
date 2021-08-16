@@ -1,8 +1,8 @@
 package com.duowan.efox
 
-import groovy.util.Node
-import groovy.util.NodeList
+
 import org.codehaus.groovy.runtime.typehandling.DefaultTypeTransformation
+import org.json.JSONObject
 
 // https://blog.csdn.net/danpie3295/article/details/106779461
 // https://blog.csdn.net/LjingDong/article/details/86289243
@@ -49,6 +49,7 @@ final class NodeUtils {
 
     // 读取本地的
     static Node readNodeFromLocal(File xmlFile) {
+        if (!xmlFile.exists() || xmlFile.size() < 1) return null
         return new XmlParser().parse(xmlFile)
     }
 
@@ -56,6 +57,7 @@ final class NodeUtils {
     static void writeNode2Local(Node node, File xmlFile) {
         xmlFile.parentFile.mkdirs()
 
+        sortNodeChilren(node) // 都排序
         // 将XML写入本地
         FileWriter fileWriter = new FileWriter(xmlFile)
         XmlNodePrinter nodePrinter = new XmlNodePrinter(new PrintWriter(fileWriter))
@@ -79,12 +81,13 @@ final class NodeUtils {
     }
 
     // 给node设置值
-    static void setNodeValue(Node node, String value) {
+    static Node createNode(String key, String value) {
+        return new Node(null, "string", ["name": "$key"], "$value")
     }
 
     static HashMap<String, String> nodeList2HashMap(Node node) {
         assert node.children() instanceof NodeList
-        HashMap<String, String> hashMap = new HashMap<>();
+        HashMap<String, String> hashMap = new HashMap<>()
         node.children().forEach({ n ->
             def key = getNodeKey(n)
             def val = getNodeValue(n)
@@ -122,7 +125,7 @@ final class NodeUtils {
         assert n1 != null && n1.children() instanceof NodeList
         assert n2 != null && n2.children() instanceof NodeList
 
-        List<NodeData> result = new ArrayList<>();
+        List<NodeData> result = new ArrayList<>()
 
         HashMap<String, String> hm2 = nodeList2HashMap(n2)
 
@@ -138,7 +141,7 @@ final class NodeUtils {
             }
         })
 
-        return result;
+        return result
     }
 
     // 将x1中的key 补充到 x2中的key
@@ -193,13 +196,13 @@ final class NodeUtils {
         if (index > 0) {
             return filename.substring(0, index) + "_" + suffix + filename.substring(index)
         } else {
-            return filename + "_" + suffix;
+            return filename + "_" + suffix
         }
     }
 
     static boolean isSameValue(List<NodeData> list) {
-        Boolean isSame = true;
-        List<String> all = new ArrayList<>();
+        Boolean isSame = true
+        List<String> all = new ArrayList<>()
         list.forEach({
             list.add(it.value)
         })
@@ -215,13 +218,13 @@ final class NodeUtils {
             def key_lower = key.toLowerCase()
             List<NodeData> list = map.get(key_lower)
             if (list == null) {
-                list = new ArrayList<>();
+                list = new ArrayList<>()
             }
             list.add(new NodeData(key, val))
             map.put(key_lower, list)
         })
 
-        HashMap<String, List<NodeData>> result = new HashMap<>();
+        HashMap<String, List<NodeData>> result = new HashMap<>()
         map.forEach({ key, nodedata ->
             if (nodedata.size() > 1) result.put(key, nodedata) // 将多余一个的保存起来
         })
@@ -242,7 +245,7 @@ final class NodeUtils {
         println("以第一个为准")
         n1.children().forEach({ n ->
             def key = getNodeKey(n)
-            if(!h2.containsKey(key)) {
+            if (!h2.containsKey(key)) {
                 println("[diff] $key")
             }
         })
@@ -252,9 +255,24 @@ final class NodeUtils {
         println("以第二个为准")
         n2.children().forEach({ n ->
             def key = getNodeKey(n)
-            if(!h1.containsKey(key)) {
+            if (!h1.containsKey(key)) {
                 println("[diff] $key")
             }
         })
     }
+
+    static Node jsonObject2Node(JSONObject jo) {
+
+        Node res = new Node(null, "resources")
+        // 创建child
+        //<string name="Kakao">Kakao</string>
+        Iterator<String> iterator = jo.keys()
+        while (iterator.hasNext()) {
+            String key = iterator.next()
+            String val = jo.opt(key)
+            new Node(res, "string", ["name": "$key"], val == null ? "" : val)
+        }
+        return res
+    }
+
 }

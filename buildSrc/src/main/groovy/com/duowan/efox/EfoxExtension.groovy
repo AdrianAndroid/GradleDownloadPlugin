@@ -13,7 +13,7 @@ class EfoxExtension {
     List<String> efoxPaths = []//["Teachee___2_3_0"]
 //     String efoxPaths = [] // 所有的内容 // 通过这个创建不同的工程
     Map<String, String> valuesDir = ["values": "en", "values-ko": "ko"] //需要外部传入
-    Map<String, String> valueReplace = ["&": "&amp;", "%@": "%s", "\'": "\\\'"]
+    Map<String, String> valueReplace = ["%@": "%s"]//["&": "&amp;", "%@": "%s", "\'": "\\\'"]
     boolean useLog = true
 
 
