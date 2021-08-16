@@ -12,6 +12,7 @@ buildscript {
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
         classpath "de.undercouch:gradle-download-task:4.1.2"
 
+        classpath "tv.athena:api-gradle-plugin:2.2.3"
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files
     }
