@@ -4,6 +4,7 @@ class NodeData {
     String key
     String value
     String oldValue
+    List<String> ovs //所有的values
 
     NodeData(String key, String value) {
         this.key = key
@@ -14,5 +15,13 @@ class NodeData {
         this.key = key
         this.value = value
         this.oldValue = oldValue
+    }
+
+    // 添加olevalue
+    NodeData appendOldValues(String oldValue) {
+        if (ovs == null) {
+            ovs = new ArrayList<>();
+        }
+        ovs.add(oldValue)
     }
 }

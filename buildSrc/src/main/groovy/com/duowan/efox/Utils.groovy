@@ -170,8 +170,8 @@ final class Utils {
     static List<NodeData> findSameKV(List<NodeData> listNode, Boolean sameV) {
         if (listNode == null || listNode.size() < 1) return new ArrayList<>()
         // 创建一个新的
-        HashMap<String, NodeData> hashMap = new HashMap<>();
-        List<NodeData> listResult = new ArrayList<>();
+        HashMap<String, NodeData> hashMap = new HashMap<>()
+        List<NodeData> listResult = new ArrayList<>()
         listNode.forEach({ NodeData node ->
             if (hashMap.containsKey(node.key)) {
                 NodeData preNode = hashMap.get(node.key)
@@ -374,7 +374,7 @@ final class Utils {
         PrintWriter pw = new PrintWriter(xmlFile, ("UTF-8"));
 //        PrintWriter pw = new PrintWriter(xmlFile,("GBK"));
         pw.write(XmlUtil.serialize(config));//用XmlUtil.serialize方法,将String改为xml格式
-        pw.close();
+        pw.close()
     }
 
 }

@@ -13,16 +13,12 @@ efox {
     efoxPath = "iOS_1_9_0___1_9_0" //"Teachee___2_3_0" //需要修改
     efoxPaths = ["iOS_1_9_0___1_9_0", "Teachee___2_3_0"]
     valuesDir = ["values": "en", "values-ko": "ko"] //下载几种格式
-    valueReplace = ["&": "&amp;", "%@": "%s", "\\'": "\\\\'", '\'':'\\'] // 特殊符号替换
+    valueReplace = ["&": "&amp;", "%@": "%s", "\\'": "\\\\'", '\'': '\\'] // 特殊符号替换
 
     // 额外的
-//    opSrcs = [
-//            "/Users/flannery/Desktop/yy/TeacheeMaster-android/common/commonres/src/main/res/values/strings.xml",
-//            "/Users/flannery/Desktop/yy/TeacheeMaster-android/common/commonres/src/main/res/values-ko/strings-ko.xml"
-//    ]
     opSrcs = [
-            "/Users/flannery/Desktop/yy/GradleDownloadPlugin/原始数据/Educator/merged.dir/values/values.xml",
-            "/Users/flannery/Desktop/yy/GradleDownloadPlugin/原始数据/Educator/merged.dir/values-ko/values-ko.xml"
+            "/Users/flannery/Desktop/yy/Educator-android/common/commonres/src/main/res/values/strings_sort.xml",
+            "/Users/flannery/Desktop/yy/Educator-android/common/commonres/src/main/res/values-ko/strings-ko_sort.xml"
     ]
 }
 

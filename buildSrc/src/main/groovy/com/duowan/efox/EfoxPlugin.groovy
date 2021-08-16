@@ -45,18 +45,18 @@ class EfoxPlugin implements Plugin<Project> {
                 println("==============")
             }
         }
-        // 文件排序，不做操作 <string>
-        project.task('efoxSort') {
-            setGroup("efox")
-            doLast {
-//              String src = "/Users/flannery/Desktop/yy/Educator-android/common/commonres/src/main/res"
-                extension.opSrcs.forEach({ fileName ->
-                    List<NodeData> list = Utils.readXmlTNodeData(new File(fileName))
-                    Utils.sortNodeData(list)
-                    Utils.writeNodeDataToFile(new File(Utils.newFileName(fileName, "sort")), list)
-                })
-            }
-        }
+//        // 文件排序，不做操作 <string>
+//        project.task('efoxSort') {
+//            setGroup("efox")
+//            doLast {
+////              String src = "/Users/flannery/Desktop/yy/Educator-android/common/commonres/src/main/res"
+//                extension.opSrcs.forEach({ fileName ->
+//                    List<NodeData> list = Utils.readXmlTNodeData(new File(fileName))
+//                    Utils.sortNodeData(list)
+//                    Utils.writeNodeDataToFile(new File(Utils.newFileName(fileName, "sort")), list)
+//                })
+//            }
+//        }
 
         // 将相同的key进行处理
         project.task('efox_排序') {
@@ -136,13 +136,35 @@ class EfoxPlugin implements Plugin<Project> {
             setGroup("efox")
             setDescription("KEY-VALUE都相同")
             doLast {
-                String path = opPath
-                // 先读取
-                List<NodeData> listNode = Utils.readXmlTNodeData(new File(path))
-                List<NodeData> listResult = Utils.findSameKV(listNode, false)
-                // 打印出来
-                listResult.forEach({ NodeData data ->
-                    println("[samekv] " + data.key + " = " + data.value)
+                extension.opSrcs.forEach({ path ->
+
+                    println("[efox]=========${path}")
+
+                    Map<String, List<NodeData>> map = NodeUtils.findSameKv2(new File(path))
+                    map.forEach({ key, list ->
+                        list.forEach({ nd ->
+                            println("[sameKV] ${nd.key} \t ${nd.value}")
+                        })
+                    })
+                })
+            }
+        }
+
+
+        project.task('efox_同一文件找出K相同V相同(key忽略大小写)') {
+            setGroup("efox")
+            setDescription("KEY-VALUE都相同")
+            doLast {
+                extension.opSrcs.forEach({ path ->
+
+                    println("[efox]=========${path}")
+
+                    Map<String, List<NodeData>> map = NodeUtils.findSameKv2(new File(path))
+                    map.forEach({ key, list ->
+                        list.forEach({ nd ->
+                            println("[sameKV] ${nd.key} \t ${nd.value}")
+                        })
+                    })
                 })
             }
         }
@@ -211,20 +233,46 @@ class EfoxPlugin implements Plugin<Project> {
             }
         }
 
+        project.task('efox_补齐两个文件的key') {
+            setGroup("efox")
+            doLast {
+                String s1 = extension.opSrcs[0]
+                String s2 = extension.opSrcs[1]
+                NodeUtils.fillIn(new File(s1), new File(s2))
+            }
+        }
+
+        project.task('efox_比较两个文件差几个key') {
+            setGroup("efox")
+            doLast {
+                println("efox_比较两个文件差几个key！")
+                String s1 = extension.opSrcs[0]
+                String s2 = extension.opSrcs[1]
+                NodeUtils.difference(new File(s1), new File(s2))
+            }
+        }
+
         project.task('efox_测试') {
             setGroup("efox")
             doLast {
-                println("===================")
-                String src = "/Users/flannery/Desktop/yy/GradleDownloadPlugin/原始数据/Teachea/merged.dir/values/values.xml"
-                // 1. 先读取
-                Node node = NodeUtils.readNodeFromLocal(new File(src)) //先读取
-                // 2. 再筛选
-                NodeUtils.filterNodeChilrenString(node)
-                // 3. 在排序
-                NodeUtils.sortNodeChilren(node)
-                // 4. 写入本地
-                NodeUtils.writeNode2Local(node, new File(Utils.newFileName(src, "nodes")))
+                println("测试大小写！")
+                HashMap<String, String> map = new HashMap<>();
+                map.put("Cancel", "Cancel")
+                map.put("cancel", "cancel")
+                println(map)
             }
         }
     }
 }
+
+// --------》排序
+//     println("===================")
+//     String src = "/Users/flannery/Desktop/yy/GradleDownloadPlugin/原始数据/Teachea/merged.dir/values/values.xml"
+//     // 1. 先读取
+//     Node node = NodeUtils.readNodeFromLocal(new File(src)) //先读取
+//     // 2. 再筛选
+//     NodeUtils.filterNodeChilrenString(node)
+//     // 3. 在排序
+//     NodeUtils.sortNodeChilren(node)
+//     // 4. 写入本地
+//     NodeUtils.writeNode2Local(node, new File(Utils.newFileName(src, "nodes")))
