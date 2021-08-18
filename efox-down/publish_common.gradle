@@ -1,8 +1,8 @@
 apply plugin: 'maven-publish'
 apply plugin: 'signing'
 
-group = "com.ques.plugins"
-version= "0.0.24"
+group = "com.duowan.efox"
+version= "0.0.2"
 
 def isReleaseBuild() {
     return version.contains("SNAPSHOT") == false
@@ -65,6 +65,7 @@ publishing {
 ext.addPublishTask = this.&_addPublishTask
 
 def _addPublishTask(String libArtifact, String outputFilePath) {
+//    setGroup("upload")
     publishing {
         publications {
             maven(MavenPublication) {
