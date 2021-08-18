@@ -1,4 +1,13 @@
 apply plugin: 'groovy'
+apply plugin: 'maven'
+apply plugin: 'maven-publish'
+
+repositories {
+    maven { url 'http://repo.duowan.com:8181/nexus/content/groups/public' }
+    jcenter()
+    google()
+}
+
 dependencies {
     implementation gradleApi()
     implementation localGroovy()
@@ -8,69 +17,21 @@ dependencies {
     implementation 'org.apache.poi:poi:4.1.2' // excel表格操作
     implementation 'org.apache.poi:poi-ooxml:4.1.2' // excel表格操作
 }
-repositories {
-//    google()
-//    jcenter()
-    maven { url 'http://repo.duowan.com:8181/nexus/content/groups/public' }
+
+apply from: 'publish_common.gradle'
+ext.addPublishPluginTask('efox-down')
+
+task groovydocJar(type: Jar, dependsOn: groovydoc) {
+    classifier = 'javadoc'
+    from groovydoc.getDestinationDir()
 }
 
-//compile 'org.apache.poi:poi:4.1.2'
+task sourcesJar(type: Jar, dependsOn: classes) {
+    classifier = 'sources'
+    from sourceSets.main.allSource
+}
 
-//cp -rf buildSrc router-gradle-plugin
-//./gradlew :router-gradle-plugin:uploadArchives
-
-//<!-- https://mvnrepository.com/artifact/org.apache.poi/poi -->
-//<dependency>
-//  <groupId>org.apache.poi</groupId>
-//  <artifactId>poi</artifactId>
-//  <version>3.17</version>
-//</dependency>
-//<!-- https://mvnrepository.com/artifact/org.apache.poi/poi-ooxml -->
-//<dependency>
-//  <groupId>org.apache.poi</groupId>
-//  <artifactId>poi-ooxml</artifactId>
-//  <version>3.17</version>
-//</dependency>
-
-apply plugin:  'maven'
-
-//uploadArchives {
-//    repositories {
-//        mavenDeployer {
-//            // 设置发布路径为 工程根目录下面的repo文件夹
-//            repositoriy(url: uri('../repo')) {
-//                // 设置groupId，通常为包名
-//                pom.groupId = 'com.imooc.router'
-//                // 设置artifactId，为当前插件的名称
-//                pom.artifactId = 'router-gradle-plugin'
-//                // 设置 插件的版本号
-//                pom.version = '1.0.0'
-//            }
-//        }
-//    }
-//}
-// 调用maven插件，用于发布
-apply plugin: 'maven'
-
-// 配置maven插件中的uploadArchives任务
-uploadArchives {
-    repositories {
-        mavenDeployer {
-
-            // 设置发布路径为 工程根目录下面的 repo 文件夹
-            repository(url: uri('../repo')) {
-
-                // 设置groupId，通常为包名
-                pom.groupId = 'com.immoc.router'
-
-                // 设置artifactId，为当前插件的名称
-                pom.artifactId = 'router-gradle-plugin'
-
-                // 设置 插件的版本号
-                pom.version = '1.0.0'
-
-            }
-
-        }
-    }
+artifacts {
+    archives groovydocJar
+    archives sourcesJar
 }

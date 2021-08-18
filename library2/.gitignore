@@ -1,2 +1,4 @@
 /build
 .gradle/
+/src/main/res/values/commonstring.xml
+/src/main/res/values-ko/commonstring.xml

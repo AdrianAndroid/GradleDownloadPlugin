@@ -21,15 +21,6 @@ dependencies {
 apply from: 'publish_common.gradle'
 ext.addPublishPluginTask('efox-down')
 
-//uploadArchives {
-//    repositories.mavenDeployer {
-//        repository(url: uri('../repo'))
-//        pom.groupId = "com.duowan.efox"
-//        pom.artifactId = "efox-down"
-//        pom.version = "0.0.1"
-//    }
-//}
-
 task groovydocJar(type: Jar, dependsOn: groovydoc) {
     classifier = 'javadoc'
     from groovydoc.getDestinationDir()
