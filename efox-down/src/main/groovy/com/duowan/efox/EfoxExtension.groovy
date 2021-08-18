@@ -3,6 +3,8 @@ package com.duowan.efox
 class EfoxExtension {
     String message = "Hello this is my custom plugin ..."
 
+    String debugTask = true // 是否加载测试的task
+
     boolean clearBefore = false // 现在value之前是否清空原有数据， 最好不要变
     String default_values = "values"
     boolean check_K_V = false // 检查键值对
@@ -15,6 +17,7 @@ class EfoxExtension {
     Map<String, String> valuesDir = ["values": "en", "values-ko": "ko"] //需要外部传入
     Map<String, String> valueReplace = ["%@": "%s"]//["&": "&amp;", "%@": "%s", "\'": "\\\'"]
     boolean useLog = true
+    String patternKey = '^[0-9a-zA-Z_]+\$' // key的表达式
 
 
     // 额外的
