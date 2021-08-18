@@ -13,8 +13,7 @@ efox {
     valuesDir = ["values": "en", "values-ko": "ko"] //下载几种格式
 
     patternKey = '^[a-zA-Z][0-9a-zA-Z_]+\$'
-    valueReplace = ["%@": "%s"] // 特殊符号替换
-
+    valueReplace = ["%@": "%s", "\\\'": "\'", "\\\"":"\""] // 特殊符号替换
 
     // 额外的
     opSrcs = [
