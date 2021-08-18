@@ -4,4 +4,6 @@
 <!--    <string name="batch_live_uncoming_">Live & Upcoming</string>-->
     <string name="batch_live_uncoming">Live %@ Upcoming</string>
     <string name="NNN_name">NNN_name</string>
+
+    <string name="test_string">Confimed password doesn\\\'t macth new password</string>
 </resources>

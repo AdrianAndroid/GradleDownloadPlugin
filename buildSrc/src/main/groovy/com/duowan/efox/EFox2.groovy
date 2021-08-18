@@ -40,6 +40,7 @@ class EFox2 {
     private Map<String, String> valueReplace
     private boolean clearBefore
     private boolean useLog
+    private String patternKey // 过滤key的正则表达式  '^[0-9a-zA-Z_]+\$'
 
     EFox2(EfoxExtension extension, Project project, String efoxPath) {
         this.extension = extension
@@ -56,6 +57,7 @@ class EFox2 {
         this.valueReplace = extension.valueReplace //["%@": "%s"]
         this.clearBefore = extension.clearBefore
         this.useLog = extension.useLog
+        this.patternKey = extension.patternKey
     }
 
     File createFile(String valuedir) {
@@ -98,7 +100,7 @@ class EFox2 {
             if (node == null) {
                 logWrite("本地没有数据， 直接写入")
                 // 直接写入本地
-                Node wNode = NodeUtils.jsonObject2Node(jo_data)
+                Node wNode = NodeUtils.jsonObject2Node(jo_data, { v -> replaceValue(v) })
                 NodeUtils.writeNode2Local(wNode, valFile)
             } else {
                 logWrite("本地有数据， 增量写入")
@@ -138,30 +140,7 @@ class EFox2 {
         log("[EFOX] 更新完毕！！用时 = ${endTime - startTime}")
         if (useLog) writeLogToFile(new File(project.getProjectDir(), "log.txt"), logSb.toString())
     }
-    // 把本地文件全部读出来
-    private LinkedHashMap<String, String> readXmlToHashMap(File xmlFile) {
-        assert xmlFile.exists() && xmlFile.size() > 0 //这里不能为空，按理说已经判断了
-        println ">>>>>>>>>>>>>>>>>>>>"
-        def xml = new XmlParser().parse(xmlFile) // 读出来
-        println xml.children().size()
-        println ">>>>>>>>>>>>>>>>>>>>>>>>>>>>"
-        def hashMap = new LinkedHashMap() // 现在可以为空
-        xml.children().forEach({
-            if (it instanceof Node) {
-                def key = it.attributes()['name']
-                def value = ((List) it.value()).get(0)
-                assert null == hashMap.put(key, value), "不能有重复的值，直接报错，请删除原先文件中的${key}"
-            }
-        })
-        println ">>>>>>>>>>>>>>>>>>>>>>>>>>>>"
-        println ">>>>>>>>>>>打印HashMap>>>>>>>>>>>>>>>>>"
-        hashMap.forEach({ key, value ->
-            println "$key =*******= $value"
-        })
-        println ">>>>>>>>>>>结束HashMap>>>>>>>>>>>>>>>>>"
-        //println xml
-        return hashMap
-    }
+
 
     // 将xml写入本地文件
     private void writeLogToFile(File file, String log) {
@@ -214,18 +193,9 @@ class EFox2 {
         return rsp
     }
 
-    static Boolean check_validate(String str) {
-        for (i in 0..<str.length()) {
-            int c = str.charAt(i)
-            // 字母，数字，下划线
-            if (!(Character.isUpperCase(c)
-                    || Character.isLowerCase(c)
-                    || Character.isDigit(c)
-                    || '_' == c)) {
-                return false
-            }
-        }
-        return true
+    Boolean check_validate(String str) {
+        assert this.patternKey != null, "校验key的正则不能是这样子啦"
+        return str.matches(this.patternKey)
     }
 
 }

@@ -1,7 +1,10 @@
 package com.duowan.efox
 
-
+import groovy.json.StringEscapeUtils
+import org.apache.commons.io.output.StringBuilderWriter
 import org.codehaus.groovy.runtime.typehandling.DefaultTypeTransformation
+//import org.apache.groovy.io.StringBuilderWriter
+//import org.gradle.internal.impldep.org.apache.commons.io.output.StringBuilderWriter
 import org.json.JSONObject
 
 // https://blog.csdn.net/danpie3295/article/details/106779461
@@ -261,7 +264,7 @@ final class NodeUtils {
         })
     }
 
-    static Node jsonObject2Node(JSONObject jo) {
+    static Node jsonObject2Node(JSONObject jo, replaceValue) {
 
         Node res = new Node(null, "resources")
         // 创建child
@@ -269,10 +272,84 @@ final class NodeUtils {
         Iterator<String> iterator = jo.keys()
         while (iterator.hasNext()) {
             String key = iterator.next()
-            String val = jo.opt(key)
+            String val = replaceValue(escape(jo.opt(key)))
             new Node(res, "string", ["name": "$key"], val == null ? "" : val)
         }
         return res
     }
 
+    static void test() {
+        StringEscapeUtils.escapeJavaScript()
+        Writer writer = new StringBuilderWriter(3);
+    }
+
+    static char[] writeBuffer = new char[1024]
+
+    private static append(StringBuilder sb, int value) {
+        writeBuffer[0] = (char) value
+//        write(writeBuffer, 0, 1);
+        sb.append(writeBuffer, 0, 1)
+    }
+
+
+    static String escape(String str) {
+        Writer writer = new StringBuilderWriter(str.length() * 2);
+        int len = str.length()
+        for (int i = 0; i < len; i++) {
+            char ch = str.charAt(i)
+            if (ch < 32) {
+                switch (ch) {
+                    case '\b':
+                        writer.write( '\\')
+                        writer.write( 'b')
+                        break
+                    case '\n':
+                        writer.write( '\\')
+                        writer.write( 'n')
+                        break
+                    case '\t':
+                        writer.write( '\\')
+                        writer.write( 't')
+                        break
+                    case '\f':
+                        writer.write( '\\')
+                        writer.write( 'f')
+                        break
+                    case '\r':
+                        writer.write( '\\')
+                        writer.write( 'r')
+                        break
+                    default:
+                        writer.write(ch)
+                }
+            } else {
+                switch (ch) {
+                    case '\'':
+//                        if (escapeSingleQuote) {
+//                            writer.write('\\')
+//                        }
+                        writer.write( '\'')
+                        break
+                    case '"':
+                        writer.write( '\\')
+                        writer.write( '"')
+                        break
+//                    case '\\':
+//                        writer.write( '\\')
+//                        writer.write( '\\')
+//                        break
+                    case '/':
+//                        if (escapeForwardSlash) {
+//                            writer.write('\\')
+//                        }
+                        writer.write( '/')
+                        break
+                    default:
+                        writer.write(ch)
+                        break
+                }
+            }
+        }
+        return writer.toString()
+    }
 }
