@@ -106,12 +106,12 @@ final class NodeUtils {
 
     // node child 转换成 HashMap
     static HashMap<String, Node> nodeChild2HashMap(Node node) {
+        println("开始解析Node！")
         assert node.children() instanceof NodeList
         HashMap<String, Node> hashMap = new HashMap<>()
         println()
         node.children().forEach({ n ->
             def key = getNodeKey(n)
-            print("key ")
             assert null == hashMap.put(key, n), "有重复的key ${key}" //重复的key
         })
         println()
@@ -272,7 +272,7 @@ final class NodeUtils {
         Iterator<String> iterator = jo.keys()
         while (iterator.hasNext()) {
             String key = iterator.next()
-            String val = replaceValue(escape(jo.opt(key)))
+            String val = replaceValue(jo.opt(key))
             new Node(res, "string", ["name": "$key"], val == null ? "" : val)
         }
         return res
@@ -293,63 +293,77 @@ final class NodeUtils {
 
 
     static String escape(String str) {
-        Writer writer = new StringBuilderWriter(str.length() * 2);
+        Writer out = new StringBuilderWriter(str.length() * 2);
         int len = str.length()
         for (int i = 0; i < len; i++) {
             char ch = str.charAt(i)
+            // handle unicode
+//            if (ch > 0xfff) {
+//                out.write("\\u" + hex(ch));
+//            } else if (ch > 0xff) {
+//                out.write("\\u0" + hex(ch));
+//            } else if (ch > 0x7f) {
+//                out.write("\\u00" + hex(ch));
+//            } else
             if (ch < 32) {
-                switch (ch) {
-                    case '\b':
-                        writer.write( '\\')
-                        writer.write( 'b')
-                        break
-                    case '\n':
-                        writer.write( '\\')
-                        writer.write( 'n')
-                        break
-                    case '\t':
-                        writer.write( '\\')
-                        writer.write( 't')
-                        break
-                    case '\f':
-                        writer.write( '\\')
-                        writer.write( 'f')
-                        break
-                    case '\r':
-                        writer.write( '\\')
-                        writer.write( 'r')
-                        break
-                    default:
-                        writer.write(ch)
-                }
+                out.write(ch)
+//                switch (ch) {
+//                    case '\b':
+//                        out.write('\\');
+//                        out.write('b');
+//                        break;
+//                    case '\n':
+//                        out.write('\\');
+//                        out.write('n');
+//                        break;
+//                    case '\t':
+//                        out.write('\\');
+//                        out.write('t');
+//                        break;
+//                    case '\f':
+//                        out.write('\\');
+//                        out.write('f');
+//                        break;
+//                    case '\r':
+//                        out.write('\\');
+//                        out.write('r');
+//                        break;
+//                    default:
+//                        if (ch > 0xf) {
+//                            out.write("\\u00" + hex(ch));
+//                        } else {
+//                            out.write("\\u000" + hex(ch));
+//                        }
+//                        break;
+//                }
             } else {
                 switch (ch) {
                     case '\'':
-//                        if (escapeSingleQuote) {
-//                            writer.write('\\')
-//                        }
-                        writer.write( '\'')
-                        break
+                        if (true) {
+                            out.write('\\');
+                        }
+                        out.write('\'');
+                        break;
                     case '"':
-                        writer.write( '\\')
-                        writer.write( '"')
-                        break
+                        out.write('\\');
+                        out.write('"');
+                        break;
 //                    case '\\':
-//                        writer.write( '\\')
-//                        writer.write( '\\')
-//                        break
+//                        out.write('\\');
+//                        out.write('\\');
+//                        break;
                     case '/':
-//                        if (escapeForwardSlash) {
-//                            writer.write('\\')
-//                        }
-                        writer.write( '/')
-                        break
+                        if (true) {
+                            out.write('\\');
+                        }
+                        out.write('/');
+                        break;
                     default:
-                        writer.write(ch)
-                        break
+                        out.write(ch);
+                        break;
                 }
             }
         }
-        return writer.toString()
+        return out.toString()
     }
 }

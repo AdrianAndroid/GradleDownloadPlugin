@@ -1,5 +1,6 @@
 package com.duowan.efox
 
+import groovy.json.StringEscapeUtils
 import org.gradle.api.Project
 import org.json.JSONObject
 
@@ -38,6 +39,7 @@ class EFox2 {
     private String resPath
     private String urlFomat
     private Map<String, String> valueReplace
+    private Map<String, String> afterValueReplace
     private boolean clearBefore
     private boolean useLog
     private String patternKey // 过滤key的正则表达式  '^[0-9a-zA-Z_]+\$'
@@ -55,6 +57,7 @@ class EFox2 {
         //"http://multi-lang.duowan.com/multiLangBig/Teachee/%s/%s" // 地址模版
         this.resPath = extension.resPath //src/main/res
         this.valueReplace = extension.valueReplace //["%@": "%s"]
+        afterValueReplace = extension.afterValueReplace
         this.clearBefore = extension.clearBefore
         this.useLog = extension.useLog
         this.patternKey = extension.patternKey
@@ -124,6 +127,7 @@ class EFox2 {
                         logWrite("[增量] $key <==>  值：$val")
                     } else {
                         def oldValue = NodeUtils.getNodeValue(oldNode)
+                        assert val == oldValue , "值不同，请修改key= ${key} \n\t旧值：$oldValue  \n\t新值：$val"
                         if (val != oldValue) {
                             logWrite("[值不同] $key 值不同,请手动修改！！！ 旧值：$oldValue  新值：$val")
                         }
@@ -163,6 +167,10 @@ class EFox2 {
         valueReplace.forEach({ k, v ->
             value = value.replace(k, v)//value.replaceAll(k, v)
         })
+        value = NodeUtils.escape(value)
+//        valueReplace.forEach({ k, v ->
+//            value = value.replace(k, v)//value.replaceAll(k, v)
+//        })
         return value
     }
 

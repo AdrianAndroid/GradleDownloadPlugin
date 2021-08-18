@@ -16,6 +16,7 @@ class EfoxExtension {
 //     String efoxPaths = [] // 所有的内容 // 通过这个创建不同的工程
     Map<String, String> valuesDir = ["values": "en", "values-ko": "ko"] //需要外部传入
     Map<String, String> valueReplace = ["%@": "%s"]//["&": "&amp;", "%@": "%s", "\'": "\\\'"]
+    Map<String, String> afterValueReplace = ["//n": "/n"]//["&": "&amp;", "%@": "%s", "\'": "\\\'"]
     boolean useLog = true
     String patternKey = '^[0-9a-zA-Z_]+\$' // key的表达式
 
