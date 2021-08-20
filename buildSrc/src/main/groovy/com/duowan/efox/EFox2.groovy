@@ -127,9 +127,11 @@ class EFox2 {
                         logWrite("[增量] $key <==>  值：$val")
                     } else {
                         def oldValue = NodeUtils.getNodeValue(oldNode)
-                        assert val == oldValue , "值不同，请修改key= ${key} \n\t旧值：$oldValue  \n\t新值：$val"
+                        // 替换
+                        oldNode.replaceNode(NodeUtils.createNode(key, val))
+//                        assert val == oldValue , "值不同，请修改key= ${key} \n\t旧值：$oldValue  \n\t新值：$val"
                         if (val != oldValue) {
-                            logWrite("[值不同] $key 值不同,请手动修改！！！ 旧值：$oldValue  新值：$val")
+                            logWrite("[值不同] $key 值不同，已经自动替换！！！ 旧值：$oldValue  新值：$val")
                         }
                     }
                 }
