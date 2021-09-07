@@ -343,4 +343,4 @@ https://git.duowan.com/apps/ai_edu/plugin/GradleEfoxPlugin-android
 3. 上传到git
 4. 通过jekins编译
 
-<img src="/Users/flannery/Desktop/yy/GradleDownloadPlugin/README.assets/image-20210818174428837.png" alt="image-20210818174428837" style="zoom:50%;" />
+<img src="./README.assets/image-20210818174428837.png" alt="image-20210818174428837" style="zoom:50%;" />
