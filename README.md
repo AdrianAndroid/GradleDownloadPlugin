@@ -24,7 +24,7 @@ https://efox.duowan.com/i18n/native/5fd1ea4c39d83a5d34717b3f/60e2d0be92f47a05a0b
 
 
 
-![image-20210818171344555](/Users/flannery/Desktop/yy/GradleDownloadPlugin/README.assets/image-20210818171344555.png)
+![image-20210818171344555](./README.assets/image-20210818171344555.png)
 
 
 
