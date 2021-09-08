@@ -24,7 +24,7 @@ https://efox.duowan.com/i18n/native/5fd1ea4c39d83a5d34717b3f/60e2d0be92f47a05a0b
 
 
 
-![image-20210818171344555](/Users/flannery/Desktop/yy/GradleDownloadPlugin/README.assets/image-20210818171344555.png)
+![image-20210818171344555](./README.assets/image-20210818171344555.png)
 
 
 
@@ -39,13 +39,13 @@ https://efox.duowan.com/i18n/native/5fd1ea4c39d83a5d34717b3f/60e2d0be92f47a05a0b
 
 ## 1. 点击项目左边的setting图像
 
-<img src="/Users/flannery/Desktop/yy/GradleDownloadPlugin/README.assets/image-20210818171850688.png" alt="image-20210818171850688" style="zoom:50%;" />
+<img src="./README.assets/image-20210818171850688.png" alt="image-20210818171850688" style="zoom:50%;" />
 
 
 
 ## 2. 选择语言包地址
 
-<img src="/Users/flannery/Desktop/yy/GradleDownloadPlugin/README.assets/image-20210818172011963.png" alt="image-20210818172011963" style="zoom:80%;" />
+<img src="./README.assets/image-20210818172011963.png" alt="image-20210818172011963" style="zoom:80%;" />
 
 
 
@@ -100,7 +100,7 @@ efox {
 
 ## 点击grandle sync 生成task任务
 
-![image-20210818172308309](/Users/flannery/Desktop/yy/GradleDownloadPlugin/README.assets/image-20210818172308309.png)
+![image-20210818172308309](./README.assets/image-20210818172308309.png)
 
 
 
@@ -108,7 +108,7 @@ efox {
 
 
 
-<img src="/Users/flannery/Desktop/yy/GradleDownloadPlugin/README.assets/image-20210818172334328.png" alt="image-20210818172334328" style="zoom:50%;" />
+<img src="./README.assets/image-20210818172334328.png" alt="image-20210818172334328" style="zoom:50%;" />
 
 
 
@@ -275,13 +275,13 @@ values-zu
 
 # 使用EFOX开发流程
 
-![image-20210818170236454](/Users/flannery/Desktop/yy/GradleDownloadPlugin/README.assets/image-20210818170236454.png)
+![image-20210818170236454](./README.assets/image-20210818170236454.png)
 
 
 
 ## 多端合作
 
-<img src="/Users/flannery/Desktop/yy/GradleDownloadPlugin/README.assets/image-20210818170513103.png" alt="image-20210818170513103" style="zoom:70%;" />
+<img src="./README.assets/image-20210818170513103.png" alt="image-20210818170513103" style="zoom:70%;" />
 
 
 
@@ -295,7 +295,7 @@ https://efox.duowan.com/i18n/native/5fd1ea4c39d83a5d34717b3f/60e2d0be92f47a05a0b
 
 2. 添加新的key
 
-   <img src="/Users/flannery/Desktop/yy/GradleDownloadPlugin/README.assets/image-20210818171344555.png" alt="image-20210818171344555" style="zoom:20%;" />
+   <img src="./README.assets/image-20210818171344555.png" alt="image-20210818171344555" style="zoom:20%;" />
 
 
 
@@ -306,17 +306,17 @@ https://efox.duowan.com/i18n/native/5fd1ea4c39d83a5d34717b3f/60e2d0be92f47a05a0b
 
 ## 插件下载（下载字符串）
 
-<img src="/Users/flannery/Desktop/yy/GradleDownloadPlugin/README.assets/image-20210818172334328.png" alt="image-20210818172334328" style="zoom:50%;" />
+<img src="./README.assets/image-20210818172334328.png" alt="image-20210818172334328" style="zoom:50%;" />
 
 1. 点击相应的TASK， 自动下载 比如点击 [efox_Teachee__999_999] (如果本地没有文件，会自动创建文件)
 
-![image-20210818173314557](/Users/flannery/Desktop/yy/GradleDownloadPlugin/README.assets/image-20210818173314557.png)
+![image-20210818173314557](./README.assets/image-20210818173314557.png)
 
 因为有新增，所以log日志会打印出相应增加key-value
 
 因为 useLog = true（是否使用本地异常log收集），会自动本模块的log.txt文件中。 这里不用担心文件太大传到git上，我已经添加到了忽略文件中。
 
-![image-20210818173602259](/Users/flannery/Desktop/yy/GradleDownloadPlugin/README.assets/image-20210818173602259.png)
+![image-20210818173602259](./README.assets/image-20210818173602259.png)
 
 如果有任何疑问，可以在这个文件中看看有没有答案.
 
@@ -338,9 +338,9 @@ https://git.duowan.com/apps/ai_edu/plugin/GradleEfoxPlugin-android
 
 2. 修改publish_common.gradle的version
 
-![image-20210818174228098](/Users/flannery/Desktop/yy/GradleDownloadPlugin/README.assets/image-20210818174228098.png)
+![image-20210818174228098](./README.assets/image-20210818174228098.png)
 
 3. 上传到git
 4. 通过jekins编译
 
-<img src="/Users/flannery/Desktop/yy/GradleDownloadPlugin/README.assets/image-20210818174428837.png" alt="image-20210818174428837" style="zoom:50%;" />
+<img src="./README.assets/image-20210818174428837.png" alt="image-20210818174428837" style="zoom:50%;" />
