@@ -3,7 +3,7 @@ package com.duowan.efox
 class EfoxExtension {
     String message = "Hello this is my custom plugin ..."
 
-    String debugTask = false // 是否加载测试的task
+    boolean debugTask = false // 是否加载测试的task
 
     boolean clearBefore = false // 现在value之前是否清空原有数据， 最好不要变
     String default_values = "values"
