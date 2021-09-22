@@ -70,6 +70,7 @@ final class NodeUtils {
 
     static String getNodeKey(Node node) {
         def key = node.attributes()['name']
+        println("[getNodeKey] $key")
         return key
     }
 
