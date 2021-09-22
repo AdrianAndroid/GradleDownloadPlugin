@@ -37,15 +37,15 @@ final class NodeUtils {
         node.children().sort(new Comparator() {
             @Override
             int compare(Object o1, Object o2) {
-//                println("o1 instanceof Node => " + (o1 instanceof Node))
-//                println("o2 instanceof Node => " + (o2 instanceof Node))
-//                println("o1 ==> " + o1)
-//                println("o2 ==> " + o2)
-//                println("o1.name ==> " + o1.name)
-//                println("o2.name ==> " + o2.name)
-                String k1 = o1.attributes()['name']
-                String k2 = o2.attributes()['name']
-                return DefaultTypeTransformation.compareTo(k1, k2)
+                String key1 = ""
+                String key2 = ""
+                if(o1 instanceof Node) {
+                    key1 = getNodeKey((Node)o1)
+                }
+                if(o2 instanceof Node) {
+                    key2 = getNodeKey((Node)o2)
+                }
+                return DefaultTypeTransformation.compareTo(key1, key2)
             }
         })
     }
