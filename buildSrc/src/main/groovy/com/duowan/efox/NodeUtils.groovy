@@ -69,7 +69,6 @@ final class NodeUtils {
     }
 
     static String getNodeKey(Node node) {
-        println("[getNodeKey] $node")
         def key = node.attributes().get('name')
         return key
     }
@@ -112,8 +111,11 @@ final class NodeUtils {
         HashMap<String, Node> hashMap = new HashMap<>()
         println()
         node.children().forEach({ n ->
-            def key = getNodeKey(n)
-            assert null == hashMap.put(key, n), "有重复的key ${key}" //重复的key
+            println("[nodeChild2HashMap] $n")
+            if(n instanceof Node) {
+                def key = getNodeKey(n)
+                assert null == hashMap.put(key, n), "有重复的key ${key}" //重复的key
+            }
         })
         println()
         return hashMap
