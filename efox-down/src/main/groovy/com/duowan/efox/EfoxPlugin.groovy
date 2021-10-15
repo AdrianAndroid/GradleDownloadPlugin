@@ -1,6 +1,6 @@
 package com.duowan.efox
 
-import groovy.json.StringEscapeUtils
+
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 
@@ -24,11 +24,16 @@ class EfoxPlugin implements Plugin<Project> {
                 project.task('efox_' + pathName) {
                     setGroup('efox')
                     doLast {
-                        EFox2 efox2 = new EFox2(extension, project, pathName)
-                        efox2.downloadEFOX_2()
+                        new EFox2(extension, project, pathName).downloadEFOX_2()
                     }
                 }
             })
+            project.task('efox_all') {
+                setGroup('efox')
+                doLast {
+                    new EFox4(extension, project).downloadEFOX()
+                }
+            }
             if (extension.debugTask) {
                 project.task('efox_中文命名') {
                     setGroup("efox")

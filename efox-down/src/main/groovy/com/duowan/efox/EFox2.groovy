@@ -1,6 +1,6 @@
 package com.duowan.efox
 
-import groovy.json.StringEscapeUtils
+
 import org.gradle.api.Project
 import org.json.JSONObject
 

@@ -3,9 +3,10 @@ package com.duowan.efox
 import groovy.json.StringEscapeUtils
 import org.apache.commons.io.output.StringBuilderWriter
 import org.codehaus.groovy.runtime.typehandling.DefaultTypeTransformation
+import org.json.JSONObject
+
 //import org.apache.groovy.io.StringBuilderWriter
 //import org.gradle.internal.impldep.org.apache.commons.io.output.StringBuilderWriter
-import org.json.JSONObject
 
 // https://blog.csdn.net/danpie3295/article/details/106779461
 // https://blog.csdn.net/LjingDong/article/details/86289243
@@ -88,6 +89,10 @@ final class NodeUtils {
         return new Node(null, "string", ["name": "$key"], "$value")
     }
 
+    static Node createResourceNode() {
+        return new Node(null, "resources")
+    }
+
     static HashMap<String, String> nodeList2HashMap(Node node) {
         assert node.children() instanceof NodeList
         HashMap<String, String> hashMap = new HashMap<>()
@@ -121,10 +126,10 @@ final class NodeUtils {
         return hashMap
     }
 
-    static Node hashMap2Node(HashMap<String, Node> map) {
-        // 先要创建一个
-        return Node()
-    }
+//    static Node hashMap2Node(HashMap<String, Node> map) {
+//        // 先要创建一个
+//        return Node()
+//    }
 
     // 找出n1中的不同
     static List<NodeData> findSameKV(Node n1, Node n2) {
@@ -280,6 +285,18 @@ final class NodeUtils {
         }
         return res
     }
+
+    static Node hashMap2Node(HashMap map , replaceValue) {
+        Node res = new Node(null, "resources")
+        // 创建child
+        //<string name="Kakao">Kakao</string>
+        map.keySet().each { key ->
+            String val = replaceValue(map.get(key))
+            new Node(res, "string", ["name": "$key"], val == null ? "" : val)
+        }
+        return res
+    }
+
 
     static void test() {
         StringEscapeUtils.escapeJavaScript()
