@@ -106,7 +106,6 @@ class EFox2 {
                 Node wNode = NodeUtils.jsonObject2Node(jo_data, { v -> replaceValue(v) })
                 NodeUtils.writeNode2Local(wNode, valFile)
             } else {
-                logWrite("本地有数据， 增量写入")
                 // 增量写入本地
                 NodeList result = new NodeList()
 
@@ -201,16 +200,16 @@ class EFox2 {
                         }
                         resNode.append(NodeUtils.createNode(key, val))
                         // 剔除本地key
-                        map.remove(oldValue)
+                        map.remove(key) // 删除这个key
                     }
                 }
-//                if (!map.isEmpty()) {
-//                    map.each {
-//                        def key = NodeUtils.getNodeKey(it.value)
-//                        def val = NodeUtils.getNodeValue(it.value)
-//                        logWrite("[删除] $key  >>>  $val")
-//                    }
-//                }
+                if (!map.isEmpty()) {
+                    map.each {
+                        def key = it.key
+                        logWrite("[删除] $key")
+                    }
+                }
+                map.clear() //为了严谨
 
                 // 新生成的
                 NodeUtils.writeNode2Local(resNode, valFile)
