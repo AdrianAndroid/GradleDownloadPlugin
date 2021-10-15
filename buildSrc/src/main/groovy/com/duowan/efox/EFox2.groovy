@@ -147,7 +147,6 @@ class EFox2 {
     }
 
 
-
     void downloadEFOX_3() {
         if (useLog) logSb = new StringBuilder()
         long startTime = System.nanoTime()
@@ -176,7 +175,7 @@ class EFox2 {
             } else {
                 logWrite("本地有数据， 增量写入")
                 // 增量写入本地
-                Node resNode = NodeUtils.createResourceNode();
+                Node resNode = NodeUtils.createResourceNode()
 
                 HashMap<String, Node> map = NodeUtils.nodeChild2HashMap(node) // 转换成HashMap
 
@@ -219,7 +218,6 @@ class EFox2 {
         log("[EFOX] 更新完毕！！用时 = ${endTime - startTime}")
         if (useLog) writeLogToFile(new File(project.getProjectDir(), "log.txt"), logSb.toString())
     }
-
 
 
     // 将xml写入本地文件
