@@ -25,7 +25,11 @@ class EfoxPlugin implements Plugin<Project> {
                     setGroup('efox')
                     doLast {
                         EFox2 efox2 = new EFox2(extension, project, pathName)
-                        efox2.downloadEFOX_2()
+                        if (extension.version == "3") {
+                            efox2.downloadEFOX_3()
+                        } else {
+                            efox2.downloadEFOX_2()
+                        }
                     }
                 }
             })

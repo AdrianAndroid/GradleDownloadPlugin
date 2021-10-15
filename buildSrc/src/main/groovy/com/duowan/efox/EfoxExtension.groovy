@@ -4,6 +4,7 @@ class EfoxExtension {
     String message = "Hello this is my custom plugin ..."
 
     boolean debugTask = false // 是否加载测试的task
+    String version = "3"
 
     boolean clearBefore = false // 现在value之前是否清空原有数据， 最好不要变
     String default_values = "values"

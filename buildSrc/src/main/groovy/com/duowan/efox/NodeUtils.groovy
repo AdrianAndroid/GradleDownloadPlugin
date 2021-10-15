@@ -88,6 +88,10 @@ final class NodeUtils {
         return new Node(null, "string", ["name": "$key"], "$value")
     }
 
+    static Node createResourceNode() {
+        return new Node(null, "resources")
+    }
+
     static HashMap<String, String> nodeList2HashMap(Node node) {
         assert node.children() instanceof NodeList
         HashMap<String, String> hashMap = new HashMap<>()

@@ -90,7 +90,7 @@ class EFox2 {
             def json = readStringFromUrl(getEfoxUrl(efoxPath, "${path}.json"))
             // 下载并读取字符串
             JSONObject jo = new JSONObject(json)
-            JSONObject jo_data = jo.optJSONObject("data")
+            JSONObject jo_data = jo.optJSONObject("data") // efox下载的数据
 
             File resFile = createFile(value) // 创建 */src/main/res/value-ko/commonstring.xml
             File valFile = new File(resFile, resName)
@@ -146,6 +146,81 @@ class EFox2 {
         log("[EFOX] 更新完毕！！用时 = ${endTime - startTime}")
         if (useLog) writeLogToFile(new File(project.getProjectDir(), "log.txt"), logSb.toString())
     }
+
+
+
+    void downloadEFOX_3() {
+        if (useLog) logSb = new StringBuilder()
+        long startTime = System.nanoTime()
+        // 循环要下载的
+        // ["values": "en", "values-ko": "ko"]
+        valuesDir.forEach({ value, path ->
+            // def url_path = "http://multi-lang.duowan.com/multiLangBig/Teachee/${projectPath}/${pathJson}?time=${System.currentTimeSeconds()}"
+            def json = readStringFromUrl(getEfoxUrl(efoxPath, "${path}.json"))
+            // 下载并读取字符串
+            JSONObject jo = new JSONObject(json)
+            JSONObject jo_data = jo.optJSONObject("data") // efox下载的数据
+
+            File resFile = createFile(value) // 创建 */src/main/res/value-ko/commonstring.xml
+            File valFile = new File(resFile, resName)
+
+            logWrite(valFile.absolutePath)
+
+            // 读取本地
+            Node node = NodeUtils.readNodeFromLocal(valFile)
+
+            if (node == null) {
+                logWrite("本地没有数据， 直接写入")
+                // 直接写入本地
+                Node wNode = NodeUtils.jsonObject2Node(jo_data, { v -> replaceValue(v) })
+                NodeUtils.writeNode2Local(wNode, valFile)
+            } else {
+                logWrite("本地有数据， 增量写入")
+                // 增量写入本地
+                Node resNode = NodeUtils.createResourceNode();
+
+                HashMap<String, Node> map = NodeUtils.nodeChild2HashMap(node) // 转换成HashMap
+
+                Iterator<String> iterator = jo_data.keys()
+                while (iterator.hasNext()) {
+                    String key = iterator.next() // 不校验KEY了， 直接本地改
+                    if (!check_validate(key)) {
+                        logWrite("KEY不合法 请在efox修改 [ $key ] ")
+                        continue
+                    }
+                    String val = replaceValue(jo_data.opt(key)) // 从根源上就改
+                    Node oldNode = map.get(key, null) // 获取本地相同的key
+                    if (oldNode == null) { // 不包含，新增
+                        Node n = NodeUtils.createNode(key, val)
+                        resNode.append(n)
+                        logWrite("[增量] $key <==>  值：$val") // 日志
+                    } else { // 包含
+                        def oldValue = NodeUtils.getNodeValue(oldNode) // 获取本地
+                        if (val != oldValue) {
+                            logWrite("[值不同] $key 值不同，已经自动替换！！！ 旧值：$oldValue  新值：$val")
+                        }
+                        resNode.append(NodeUtils.createNode(key, val))
+                        // 剔除本地key
+                        map.remove(oldValue)
+                    }
+                }
+//                if (!map.isEmpty()) {
+//                    map.each {
+//                        def key = NodeUtils.getNodeKey(it.value)
+//                        def val = NodeUtils.getNodeValue(it.value)
+//                        logWrite("[删除] $key  >>>  $val")
+//                    }
+//                }
+
+                // 新生成的
+                NodeUtils.writeNode2Local(resNode, valFile)
+            }
+        })
+        long endTime = System.nanoTime()
+        log("[EFOX] 更新完毕！！用时 = ${endTime - startTime}")
+        if (useLog) writeLogToFile(new File(project.getProjectDir(), "log.txt"), logSb.toString())
+    }
+
 
 
     // 将xml写入本地文件

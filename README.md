@@ -344,3 +344,28 @@ https://git.duowan.com/apps/ai_edu/plugin/GradleEfoxPlugin-android
 4. 通过jekins编译
 
 <img src="./README.assets/image-20210818174428837.png" alt="image-20210818174428837" style="zoom:50%;" />
+
+
+
+
+
+# 日志
+
+## 2021.10.15
+
+问题： efox删除，但是本地还保留
+
+解决：优先使用efox， 如果efox有key，就用
+
+https://www.processon.com/diagraming/6168e893f346fb06a9eea982
+
+![image-20211015105325290](./README.assets/image-20211015105325290.png)
+
+
+
+
+
+
+
+
+
