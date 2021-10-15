@@ -10,7 +10,8 @@ efox {
     urlFomat = "http://multi-lang.duowan.com/multiLangBig/Teachee/%s/%s" // 地址模版
     resName = "strings.xml" //通用的名称
     resPath = "src/main/res" // 该工程的这个路径下
-    efoxPaths = ["Teachee___999_999_999","Teachee_old___1_0_0", "test01___0_0_1"]
+    efoxPaths = ["test01___0_0_1"]
+//    efoxPaths = ["Teachee___999_999_999","Teachee_old___1_0_0", "test01___0_0_1"]
     valuesDir = ["values": "en", "values-ko": "ko","values-zh":"zh"] //下载几种格式
 
     patternKey = '^[a-zA-Z][0-9a-zA-Z_]+\$' // 根据这个正则过滤key(一般都是IOS上传)

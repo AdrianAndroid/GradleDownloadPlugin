@@ -16,5 +16,9 @@ class MainActivity : AppCompatActivity() {
             append("\n")
             append(getString(R.string.test_string))
         }
+
+        val hashMap = HashMap<String, String>()
+        val keys: MutableSet<String> = hashMap.keys
+        val values: MutableCollection<String> = hashMap.values
     }
 }

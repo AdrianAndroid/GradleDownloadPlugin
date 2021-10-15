@@ -125,10 +125,10 @@ final class NodeUtils {
         return hashMap
     }
 
-    static Node hashMap2Node(HashMap<String, Node> map) {
-        // 先要创建一个
-        return Node()
-    }
+//    static Node hashMap2Node(HashMap<String, Node> map) {
+//        // 先要创建一个
+//        return Node()
+//    }
 
     // 找出n1中的不同
     static List<NodeData> findSameKV(Node n1, Node n2) {
@@ -284,6 +284,18 @@ final class NodeUtils {
         }
         return res
     }
+
+    static Node hashMap2Node(HashMap map , replaceValue) {
+        Node res = new Node(null, "resources")
+        // 创建child
+        //<string name="Kakao">Kakao</string>
+        map.keySet().each { key ->
+            String val = replaceValue(map.get(key))
+            new Node(res, "string", ["name": "$key"], val == null ? "" : val)
+        }
+        return res
+    }
+
 
     static void test() {
         StringEscapeUtils.escapeJavaScript()

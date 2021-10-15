@@ -347,23 +347,13 @@ https://git.duowan.com/apps/ai_edu/plugin/GradleEfoxPlugin-android
 
 
 
-
-
-# 日志
-
-## 2021.10.15
-
-问题： efox删除，但是本地还保留
-
-解决：优先使用efox， 如果efox有key，就用
-
-https://www.processon.com/diagraming/6168e893f346fb06a9eea982
-
-![image-20211015105325290](./README.assets/image-20211015105325290.png)
+# 新版： efox-all  一下全部下载
 
 
 
+https://www.processon.com/diagraming/61690ee10e3e746edcaf63a4
 
+![image-20211015145012191](./README.assets/image-20211015145012191.png)
 
 
 
