@@ -68,7 +68,7 @@ https://efox.duowan.com/i18n/native/5fd1ea4c39d83a5d34717b3f/60e2d0be92f47a05a0b
 buildscript {
     ext.kotlin_version = '1.4.20'
     repositories {
-        maven { url 'http://repo.duowan.com:8181/nexus/content/groups/public' }
+        maven { url 'https://nexus-android.duowan.com/nexus/content/groups/public' }
     }
     dependencies {
         ...

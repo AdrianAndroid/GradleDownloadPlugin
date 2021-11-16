@@ -5,7 +5,7 @@ buildscript {
         google()
         mavenCentral()
         maven { url "https://plugins.gradle.org/m2/" }
-        maven { url 'http://repo.duowan.com:8181/nexus/content/groups/public' }
+        maven { url 'https://nexus-android.duowan.com/nexus/content/groups/public' }
     }
     dependencies {
         classpath "com.android.tools.build:gradle:4.2.0"
@@ -24,7 +24,7 @@ allprojects {
     repositories {
         google()
         mavenCentral()
-        maven { url 'http://repo.duowan.com:8181/nexus/content/groups/public' }
+        maven { url 'https://nexus-android.duowan.com/nexus/content/groups/public' }
     }
 }
 

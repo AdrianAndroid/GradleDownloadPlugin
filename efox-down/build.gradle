@@ -3,7 +3,7 @@ apply plugin: 'maven'
 apply plugin: 'maven-publish'
 
 repositories {
-    maven { url 'http://repo.duowan.com:8181/nexus/content/groups/public' }
+    maven { url 'https://nexus-android.duowan.com/nexus/content/groups/public' }
     jcenter()
     google()
 }
