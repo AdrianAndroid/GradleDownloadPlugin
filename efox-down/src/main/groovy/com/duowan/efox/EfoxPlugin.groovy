@@ -19,6 +19,7 @@ class EfoxPlugin implements Plugin<Project> {
         EfoxExtension extension = project.efox
 
         project.afterEvaluate {
+            /*
             extension.efoxPaths.forEach({ pathName ->
                 println(pathName)
                 project.task('efox_' + pathName) {
@@ -28,8 +29,9 @@ class EfoxPlugin implements Plugin<Project> {
                     }
                 }
             })
-            project.task('efox_all') {
-                setGroup('efox')
+             */
+            project.task('sync') {
+                setGroup('language')
                 doLast {
                     new EFox4(extension, project).downloadEFOX()
                 }

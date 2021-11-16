@@ -1,6 +1,9 @@
 package com.duowan.efox
 
-
+import com.duowan.efox.model.LanguageConfig
+import com.duowan.efox.model.LanguageModel
+import com.duowan.efox.model.PackagesData
+import com.google.gson.Gson
 import org.gradle.api.Project
 import org.json.JSONObject
 
@@ -62,22 +65,33 @@ class EFox4 {
         return resValue
     }
 
+    private List<PackagesData> getPackagesList(){
+        def json = readStringFromUrl(LanguageConfig.releaseConfigApi)
+        Gson gson = new Gson()
+        LanguageModel languageModel = gson.fromJson(json, LanguageModel.class)
+        return languageModel.data[0].langPackages
+    }
+
     void downloadEFOX() {
         if (extension.useLog) logSb = new StringBuilder()
         long startTime = System.nanoTime()
 
         HashMap<String, String> newMap = new HashMap<>()
-        extension.valuesDir.forEach({ value/*values-ko*/, path /*ko*/ ->
-            File resFile = createFile(value) // 创建 */src/main/res/value-ko/
+        getPackagesList().each {item ->
+            String valueDir = "values-${item.locale}"
+            if(item.locale == "en") {
+                valueDir = "values"
+            }
+            File resFile = createFile(valueDir) // 创建 */src/main/res/value-ko/
             File valFile = new File(resFile, extension.resName) //string.xml
             logWrite(">>>${valFile.absolutePath}")
 
             // 1. 下载所有路径下的key-value
             newMap.clear()
-            extension.efoxPaths.each { url ->
-                def json = readStringFromUrl(getEfoxUrl(url, "${path}.json"))
+            if (true) {
+                def json = readStringFromUrl(item.url)
                 // 下载并读取字符串
-                JSONObject jo_data = new JSONObject(json).optJSONObject("data")
+                JSONObject jo_data = new JSONObject(json)
                 // 直接得到合格的key-value
                 jo_data.keys().each { key ->
                     // 判断是否符合
@@ -129,7 +143,7 @@ class EFox4 {
             Node newNode = NodeUtils.hashMap2Node(newMap, { v -> v})
             NodeUtils.writeNode2Local(newNode, valFile)
 
-        })
+        }
 
         long endTime = System.nanoTime()
         log("[EFOX] 更新完毕！！用时 = ${endTime - startTime}")
