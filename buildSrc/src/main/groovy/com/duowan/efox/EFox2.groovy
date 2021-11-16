@@ -1,6 +1,9 @@
 package com.duowan.efox
 
-import groovy.json.StringEscapeUtils
+import com.duowan.efox.model.LanguageConfig
+import com.duowan.efox.model.LanguageModel
+import com.duowan.efox.model.PackagesData
+import com.google.gson.Gson
 import org.gradle.api.Project
 import org.json.JSONObject
 
@@ -80,19 +83,27 @@ class EFox2 {
     }
 
 
+    private List<PackagesData> getPackagesList(){
+        def json = readStringFromUrl(LanguageConfig.releaseConfigApi)
+        Gson gson = new Gson()
+        LanguageModel languageModel = gson.fromJson(json, LanguageModel.class)
+        return languageModel.data[0].langPackages
+    }
+
     void downloadEFOX_2() {
         if (useLog) logSb = new StringBuilder()
         long startTime = System.nanoTime()
         // 循环要下载的
         // ["values": "en", "values-ko": "ko"]
-        valuesDir.forEach({ value, path ->
-            // def url_path = "http://multi-lang.duowan.com/multiLangBig/Teachee/${projectPath}/${pathJson}?time=${System.currentTimeSeconds()}"
-            def json = readStringFromUrl(getEfoxUrl(efoxPath, "${path}.json"))
+        getPackagesList().each {item ->
+            def json = readStringFromUrl(item.url)
             // 下载并读取字符串
-            JSONObject jo = new JSONObject(json)
-            JSONObject jo_data = jo.optJSONObject("data")
-
-            File resFile = createFile(value) // 创建 */src/main/res/value-ko/commonstring.xml
+            JSONObject jo_data = new JSONObject(json)
+            String valueDir = "values-${item.locale}"
+            if(item.locale == "en") {
+                valueDir = "values"
+            }
+            File resFile = createFile(valueDir) // 创建 */src/main/res/value-ko/commonstring.xml
             File valFile = new File(resFile, resName)
 
             logWrite(valFile.absolutePath)
@@ -141,7 +152,7 @@ class EFox2 {
                 node.children().addAll(result)
                 NodeUtils.writeNode2Local(node, valFile)
             }
-        })
+        }
         long endTime = System.nanoTime()
         log("[EFOX] 更新完毕！！用时 = ${endTime - startTime}")
         if (useLog) writeLogToFile(new File(project.getProjectDir(), "log.txt"), logSb.toString())
