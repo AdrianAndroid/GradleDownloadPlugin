@@ -2,7 +2,6 @@
 buildscript {
     ext.kotlin_version = "1.4.31"
     repositories {
-        google()
         mavenCentral()
         maven { url "https://plugins.gradle.org/m2/" }
         maven { url 'https://nexus-android.duowan.com/nexus/content/groups/public' }
@@ -22,7 +21,6 @@ String TAG = "root - [build.gradle]"
 
 allprojects {
     repositories {
-        google()
         mavenCentral()
         maven { url 'https://nexus-android.duowan.com/nexus/content/groups/public' }
     }
