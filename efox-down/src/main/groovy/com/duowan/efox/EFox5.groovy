@@ -280,7 +280,7 @@ class EFox5 {
         extension.valueReplace.forEach({ k, v ->
             value = value.replace(k, v)//value.replaceAll(k, v)
         })
-        value = NodeUtils.escape(value)
+        value = NodeUtils.escape(value).trim() //不需要换行
         return value
     }
 
