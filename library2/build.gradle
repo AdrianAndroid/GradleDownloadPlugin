@@ -1,43 +1,19 @@
 apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
 
-apply plugin: com.duowan.efox.EfoxPlugin
+apply plugin: 'com.duowan.efox'
 
 efox {
-    debugTask = false // 不显示额外的task（一般工具类）
     useLog = true //是否使用本地异常log收集
-    //clearBefore = false      // 现在value之前是否清空原有数据， 最好不要变
-    urlFomat = "http://multi-lang.duowan.com/multiLangBig/Teachee/%s/%s" // 地址模版
+    urlFomat = "https://config-api.teachee-backend.com/message/project/langPackages?projectCodes=%s"
+    efoxPaths = ["teachee_app_localize"] // 目前只支持一个
+    // 地址模版
     resName = "strings.xml" //通用的名称
     resPath = "src/main/res" // 该工程的这个路径下
-    efoxPaths = ["test01___0_0_1"]
-//    efoxPaths = ["Teachee___999_999_999","Teachee_old___1_0_0", "test01___0_0_1"]
-    valuesDir = ["values": "en", "values-ko": "ko","values-zh":"zh"] //下载几种格式
-
+    valuesDir = ["en": "values", "ko": "values-ko", "zh": "values-zh"] //下载几种格式
     patternKey = '^[a-zA-Z][0-9a-zA-Z_]+\$' // 根据这个正则过滤key(一般都是IOS上传)
-    valueReplace = ["%@": "%s", "\\\'": "\'", "\\\"":"\""] // 特殊符号替换
+    valueReplace = ["%@": "%s", "\\\'": "\'", "\\\"": "\""] // 特殊符号替换
 }
-
-//efox {
-//    debugTask = false // 不显示额外的task（一般工具类）
-//    useLog = true //是否使用本地异常log收集
-//    //clearBefore = false      // 现在value之前是否清空原有数据， 最好不要变
-//    urlFomat = "http://multi-lang.duowan.com/multiLangBig/Teachee/%s/%s" // 地址模版
-//    //resName = "commonstring.xml" //通用的名称
-//    resPath = "src/main/res" // 该工程的这个路径下
-//    efoxPaths = ["Teachee___999_999_999","Teachee_old___1_0_0"]
-//    valuesDir = ["values": "en", "values-ko": "ko"] //下载几种格式
-//
-//    patternKey = '^[a-zA-Z][0-9a-zA-Z_]+\$'
-//    valueReplace = ["%@": "%s", "\\\'": "\'", "\\\"":"\""] // 特殊符号替换
-//
-//    // 额外的
-//    opSrcs = [
-//            "/Users/flannery/Desktop/yy/Educator-android/common/commonres/src/main/res/values/strings_sort.xml",
-//            "/Users/flannery/Desktop/yy/Educator-android/common/commonres/src/main/res/values-ko/strings-ko_sort.xml"
-//    ]
-//}
-
 
 android {
     compileSdkVersion 31
@@ -72,10 +48,4 @@ android {
 dependencies {
 
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
-    implementation 'androidx.core:core-ktx:1.6.0'
-    implementation 'androidx.appcompat:appcompat:1.3.1'
-    implementation 'com.google.android.material:material:1.4.0'
-    testImplementation 'junit:junit:4.+'
-    androidTestImplementation 'androidx.test.ext:junit:1.1.3'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
 }
